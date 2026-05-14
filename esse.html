@@ -1,0 +1,2737 @@
+bash
+
+cat > /mnt/user-data/outputs/odontopediatria-manual.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual Clínico de Odontopediatria | Bruno Assunção Ribeiro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy-mid: #1b2d45;
+  --navy-light: #2a4570;
+  --teal: #00a99d;
+  --teal-light: #00c9bb;
+  --amber: #f59e0b;
+  --coral: #ef4444;
+  --green: #10b981;
+  --blue-soft: #e8f4f8;
+  --bg: #f5f7fa;
+  --white: #ffffff;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --sidebar-w: 280px;
+  --header-h: 60px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ===== SIDEBAR ===== */
+#sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--navy);
+  color: #fff;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s;
+}
+
+#sidebar-logo {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+#sidebar-logo h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--teal-light);
+}
+#sidebar-logo p {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+#sidebar nav { flex: 1; padding: 12px 0; }
+
+.nav-section-title {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  padding: 16px 20px 6px;
+  font-weight: 600;
+}
+
+#sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  color: rgba(255,255,255,0.72);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+#sidebar nav a:hover, #sidebar nav a.active {
+  color: #fff;
+  background: rgba(255,255,255,0.07);
+  border-left-color: var(--teal);
+}
+#sidebar nav a .icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+#sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ===== HEADER ===== */
+#header {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-w);
+  right: 0;
+  height: var(--header-h);
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 90;
+  gap: 16px;
+}
+
+#header h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-badge {
+  background: var(--teal);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--navy);
+}
+
+/* ===== MAIN CONTENT ===== */
+#main {
+  margin-left: var(--sidebar-w);
+  margin-top: var(--header-h);
+  padding: 0;
+  min-height: calc(100vh - var(--header-h));
+}
+
+.section {
+  display: none;
+  padding: 40px 48px;
+  max-width: 1100px;
+}
+.section.active { display: block; }
+
+/* ===== HERO ===== */
+.hero-banner {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #1a5f7a 100%);
+  color: white;
+  padding: 48px 48px 40px;
+  border-radius: 16px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(0,169,157,0.15);
+}
+.hero-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; right: 80px;
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  background: rgba(0,169,157,0.08);
+}
+.hero-banner h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.hero-banner p {
+  font-size: 15px;
+  opacity: 0.8;
+  max-width: 560px;
+  line-height: 1.6;
+}
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.hero-badge {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ===== CARDS ===== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+  border-color: var(--teal);
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--teal);
+  transform: scaleX(0);
+  transition: transform 0.25s;
+}
+.card:hover::before { transform: scaleX(1); }
+
+.card-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+.card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--navy);
+}
+.card p {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+/* ===== SECTION HEADERS ===== */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.section-subtitle {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
+
+/* ===== STEP BY STEP ===== */
+.steps-container {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin: 24px 0;
+}
+.steps-header {
+  background: var(--navy);
+  color: white;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.steps-header h3 {
+  font-size: 17px;
+  font-weight: 600;
+}
+.steps-header .badge {
+  background: var(--teal);
+  color: white;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.step {
+  display: flex;
+  gap: 20px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.step:last-child { border-bottom: none; }
+.step:hover { background: #f8fafc; }
+
+.step-num {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  background: var(--teal);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.step-content h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.step-content p {
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.step-content ul {
+  margin: 8px 0 0 16px;
+  font-size: 13px;
+  color: var(--text-light);
+}
+.step-content ul li { margin-bottom: 3px; }
+
+/* ===== ALERTS ===== */
+.alert {
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 16px 0;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.alert-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.alert-content p, .alert-content ul { font-size: 13.5px; line-height: 1.6; }
+.alert-content ul { margin-left: 16px; margin-top: 6px; }
+
+.alert-danger { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+.alert-danger h4 { color: #991b1b; }
+.alert-warning { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+.alert-warning h4 { color: #92400e; }
+.alert-info { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+.alert-info h4 { color: #1e40af; }
+.alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.alert-success h4 { color: #166534; }
+
+/* ===== TABLES ===== */
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin: 20px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+thead { background: var(--navy); color: white; }
+thead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:hover { background: #e8f4f8; }
+tbody td { padding: 11px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+
+/* ===== INFOBOX ===== */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+@media (max-width: 700px) { .info-grid { grid-template-columns: 1fr; } }
+
+.info-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+.info-box h4 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--teal);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+.info-box ul {
+  margin-left: 16px;
+  font-size: 13.5px;
+}
+.info-box ul li { margin-bottom: 5px; }
+
+/* ===== DRUG CALCULATOR ===== */
+#calculator-box {
+  background: var(--white);
+  border: 2px solid var(--teal);
+  border-radius: 16px;
+  padding: 32px;
+  margin: 24px 0;
+  max-width: 600px;
+}
+#calculator-box h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+#calculator-box .subtitle {
+  color: var(--text-light);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+.calc-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.calc-field { flex: 1; min-width: 160px; }
+.calc-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.calc-field select, .calc-field input[type=number] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--navy);
+  background: #f8fafc;
+  transition: border-color 0.2s;
+}
+.calc-field select:focus, .calc-field input:focus {
+  outline: none;
+  border-color: var(--teal);
+  background: white;
+}
+#calc-btn {
+  background: var(--teal);
+  color: white;
+  border: none;
+  padding: 11px 28px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+#calc-btn:hover { background: var(--navy); }
+#calc-result {
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 4px;
+  display: none;
+}
+#calc-result.show { display: block; }
+#calc-result h4 { color: #166534; font-size: 16px; margin-bottom: 8px; }
+#calc-result .result-line {
+  font-size: 13.5px;
+  color: #166534;
+  margin-bottom: 4px;
+  display: flex;
+  gap: 8px;
+}
+#calc-result .result-line strong { font-family: 'IBM Plex Mono', monospace; font-size: 15px; }
+
+.calc-formula {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text-light);
+}
+.calc-formula strong { color: var(--navy); }
+
+/* ===== FLOWCHART ===== */
+.flowchart {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 24px 0;
+}
+.flowchart h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+.flow-node {
+  background: var(--blue-soft);
+  border: 1.5px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin: 8px 0;
+  font-size: 13.5px;
+  color: var(--navy);
+  position: relative;
+}
+.flow-node.decision {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+.flow-node.action {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+.flow-node.warning-node {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+.flow-arrow {
+  text-align: center;
+  font-size: 20px;
+  color: var(--text-light);
+  line-height: 1;
+  margin: 2px 0;
+}
+.flow-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+/* ===== QUICK REF ===== */
+.quick-ref {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.qr-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.qr-item .label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+.qr-item .value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ===== TABS ===== */
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  border-radius: 4px 4px 0 0;
+}
+.tab-btn:hover { color: var(--teal); background: #f8fafc; }
+.tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); font-weight: 600; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ===== CASE STUDY ===== */
+.case-study {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin: 20px 0;
+}
+.case-header {
+  background: linear-gradient(135deg, var(--navy-light), var(--navy));
+  color: white;
+  padding: 20px 24px;
+}
+.case-header .case-id {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+.case-header h3 { font-size: 18px; }
+.case-body { padding: 24px; }
+.case-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+.case-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.case-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--teal);
+  min-width: 130px;
+  padding-top: 1px;
+}
+.case-value { font-size: 14px; color: var(--text); line-height: 1.6; flex: 1; }
+
+/* ===== DRUG TABLE ===== */
+.drug-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 12px 0;
+  overflow: hidden;
+}
+.drug-card-header {
+  background: var(--navy-mid);
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.drug-card-header h4 { font-size: 15px; font-weight: 600; }
+.drug-type-badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.15);
+  font-weight: 600;
+}
+.drug-card-body {
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.drug-field label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+  display: block;
+  margin-bottom: 3px;
+}
+.drug-field span {
+  font-size: 14px;
+  color: var(--navy);
+  font-weight: 500;
+}
+
+/* ===== ANATOMY BOX ===== */
+.anatomy-box {
+  background: linear-gradient(135deg, #1b2d45, #2a4570);
+  color: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.anatomy-box h4 { font-size: 16px; margin-bottom: 12px; color: var(--teal-light); }
+.anatomy-box ul { margin-left: 16px; }
+.anatomy-box ul li { margin-bottom: 8px; font-size: 14px; opacity: 0.9; }
+.anatomy-box ul li strong { color: var(--teal-light); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; }
+  #header { left: 0; }
+  #menu-toggle { display: block; }
+  .section { padding: 24px 20px; }
+  .hero-banner { padding: 32px 24px; }
+  .hero-banner h1 { font-size: 24px; }
+  #sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+  }
+  #sidebar-overlay.show { display: block; }
+}
+
+h2.content-h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--navy);
+  margin: 32px 0 12px;
+}
+h3.content-h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy-mid);
+  margin: 24px 0 10px;
+}
+p.body-text {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+ul.body-list {
+  margin: 8px 0 12px 20px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+}
+ul.body-list li { margin-bottom: 5px; }
+
+.tip-box {
+  background: #f0fdf4;
+  border-left: 4px solid var(--green);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 13.5px;
+  color: #166534;
+}
+.tip-box strong { font-weight: 700; }
+
+.error-box {
+  background: #fef2f2;
+  border-left: 4px solid var(--coral);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 13.5px;
+  color: #991b1b;
+}
+
+.divider {
+  border: none;
+  border-top: 2px solid var(--border);
+  margin: 32px 0;
+}
+
+.tag {
+  display: inline-block;
+  background: var(--blue-soft);
+  color: var(--navy-light);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 2px;
+}
+.tag.red { background: #fef2f2; color: #991b1b; }
+.tag.green { background: #f0fdf4; color: #166534; }
+.tag.amber { background: #fffbeb; color: #92400e; }
+
+.credit-bar {
+  background: linear-gradient(90deg, var(--navy), var(--navy-light));
+  color: rgba(255,255,255,0.7);
+  padding: 12px 20px;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+.credit-bar strong { color: var(--teal-light); }
+</style>
+</head>
+<body>
+
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <div id="sidebar-logo">
+    <h1>Manual Clínico de Odontopediatria</h1>
+    <p>Referência Clínica Prática</p>
+  </div>
+  <nav>
+    <div class="nav-section-title">Início</div>
+    <a href="#" class="active" onclick="showSection('home')"><span class="icon">🏠</span>Página Inicial</a>
+
+    <div class="nav-section-title">⭐ Técnicas Clínicas</div>
+    <a href="#" onclick="showSection('anestesia')"><span class="icon">💉</span>Anestesia Local</a>
+    <a href="#" onclick="showSection('isolamento')"><span class="icon">🦷</span>Isolamento do Campo</a>
+    <a href="#" onclick="showSection('carie')"><span class="icon">🔬</span>Terapêutica da Cárie</a>
+    <a href="#" onclick="showSection('restauracoes')"><span class="icon">🔧</span>Restaurações</a>
+    <a href="#" onclick="showSection('restauracao-direta')"><span class="icon">🦷</span>Técnicas de Restauração Direta</a>
+    <a href="#" onclick="showSection('terapia-pulpar')"><span class="icon">❤️</span>Terapia Pulpar</a>
+    <a href="#" onclick="showSection('cirurgia')"><span class="icon">✂️</span>Cirurgia Bucal</a>
+    <a href="#" onclick="showSection('traumatismo')"><span class="icon">⚡</span>Traumatismo</a>
+
+    <div class="nav-section-title">Conhecimento</div>
+    <a href="#" onclick="showSection('manejo')"><span class="icon">👶</span>Manejo Infantil</a>
+    <a href="#" onclick="showSection('farmaco')"><span class="icon">💊</span>Farmacologia</a>
+    <a href="#" onclick="showSection('casos')"><span class="icon">📋</span>Casos Clínicos</a>
+    <a href="#" onclick="showSection('anatomia')"><span class="icon">📖</span>Anatomia & Desenvolvimento</a>
+  </nav>
+  <div id="sidebar-footer">
+    Desenvolvido por Bruno Assunção Ribeiro<br>
+    Baseado em: Passo a Passo em Odontopediatria Clínica – UFG, 2019
+  </div>
+</aside>
+
+<!-- Header -->
+<header id="header">
+  <button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+  <h2 id="header-title">Manual Clínico de Odontopediatria</h2>
+  <span class="header-badge">Versão Clínica 2024</span>
+</header>
+
+<!-- Main Content -->
+<main id="main">
+
+<!-- HOME -->
+<div id="section-home" class="section active">
+  <div class="hero-banner">
+    <h1>Manual Clínico de<br>Odontopediatria</h1>
+    <p>Guia completo de técnicas clínicas, protocolos baseados em evidência e condutas passo a passo para o atendimento odontológico infantil.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">📚 Baseado em UFG/AAPD 2019</span>
+      <span class="hero-badge">🔬 Protocolos Atualizados</span>
+      <span class="hero-badge">👶 Foco Pediátrico</span>
+      <span class="hero-badge">✅ Passo a Passo</span>
+    </div>
+  </div>
+
+  <div class="credit-bar">
+    Manual desenvolvido por <strong>Bruno Assunção Ribeiro</strong> · Conteúdo baseado em: Passo a Passo em Odontopediatria Clínica – Fac. Odontologia UFG, 2019
+  </div>
+
+  <div style="margin-top:32px;">
+    <h2 class="section-title">Navegação Rápida</h2>
+    <p class="section-subtitle">Selecione uma área clínica para acessar os protocolos e técnicas detalhadas</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card" onclick="showSection('anestesia')">
+      <div class="card-icon">💉</div>
+      <h3>Anestesia Local</h3>
+      <p>Anestésicos, doses pediátricas, técnicas infiltrativa, pterigomandibular, palatina e calculadora interativa.</p>
+    </div>
+    <div class="card" onclick="showSection('isolamento')">
+      <div class="card-icon">🦷</div>
+      <h3>Isolamento do Campo</h3>
+      <p>Dique de borracha, isolamento absoluto e relativo, grampos odontopediátricos, passo a passo completo.</p>
+    </div>
+    <div class="card" onclick="showSection('carie')">
+      <div class="card-icon">🔬</div>
+      <h3>Terapêutica da Cárie</h3>
+      <p>DFP, ART, Hall Technique, selantes, remoção seletiva, abordagem minimamente invasiva.</p>
+    </div>
+    <div class="card" onclick="showSection('restauracoes')">
+      <div class="card-icon">🔧</div>
+      <h3>Restaurações</h3>
+      <p>Resina composta, ionômero de vidro, coroa de aço, coroa de acetato – protocolos completos.</p>
+    </div>
+    <div class="card" onclick="showSection('terapia-pulpar')">
+      <div class="card-icon">❤️</div>
+      <h3>Terapia Pulpar</h3>
+      <p>Diagnóstico pulpar, proteção direta, pulpotomia, biopulpectomia e necropulpectomia.</p>
+    </div>
+    <div class="card" onclick="showSection('cirurgia')">
+      <div class="card-icon">✂️</div>
+      <h3>Cirurgia Bucal</h3>
+      <p>Exodontia, ulectomia, frenectomia lingual e labial, orientações pós-operatórias.</p>
+    </div>
+    <div class="card" onclick="showSection('traumatismo')">
+      <div class="card-icon">⚡</div>
+      <h3>Traumatismo Dental</h3>
+      <p>Classificação, atendimento imediato, condutas por tipo de traumatismo, sequelas.</p>
+    </div>
+    <div class="card" onclick="showSection('farmaco')">
+      <div class="card-icon">💊</div>
+      <h3>Farmacologia</h3>
+      <p>Analgésicos, anti-inflamatórios, antibióticos, doses pediátricas, profilaxia antibiótica.</p>
+    </div>
+    <div class="card" onclick="showSection('manejo')">
+      <div class="card-icon">👶</div>
+      <h3>Manejo Comportamental</h3>
+      <p>Técnicas de adaptação, escalas de avaliação, comunicação infantil, atendimento humanizado.</p>
+    </div>
+    <div class="card" onclick="showSection('casos')">
+      <div class="card-icon">📋</div>
+      <h3>Casos Clínicos</h3>
+      <p>Casos simulados completos com diagnóstico, planejamento, sequência clínica e prognóstico.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ANESTESIA -->
+<div id="section-anestesia" class="section">
+  <h1 class="section-title">💉 Anestesia Local em Odontopediatria</h1>
+  <p class="section-subtitle">Anestésicos locais são fármacos utilizados para bloquear temporariamente a condução dos impulsos nervosos, levando à diminuição ou perda da sensibilidade dolorosa.</p>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('anest-tab', 'tab-conceitos', this)">Conceitos & Fármacos</button>
+    <button class="tab-btn" onclick="showTab('anest-tab', 'tab-tecnicas', this)">Técnicas Anestésicas</button>
+    <button class="tab-btn" onclick="showTab('anest-tab', 'tab-calc', this)">Calculadora de Dose</button>
+    <button class="tab-btn" onclick="showTab('anest-tab', 'tab-complic', this)">Complicações</button>
+    <button class="tab-btn" onclick="showTab('anest-tab', 'tab-rec', this)">Recomendações</button>
+  </div>
+
+  <div id="anest-tab">
+
+  <!-- TAB: CONCEITOS -->
+  <div id="tab-conceitos" class="tab-panel active">
+    <h2 class="content-h2">Propriedades Desejáveis dos Anestésicos</h2>
+    <div class="info-grid">
+      <div class="info-box">
+        <h4>✅ Propriedades Ideais</h4>
+        <ul>
+          <li>Não irritante aos tecidos</li>
+          <li>Baixa toxicidade sistêmica</li>
+          <li>Início rápido de ação</li>
+          <li>Duração suficiente (1–3 horas)</li>
+          <li>Ação reversível</li>
+          <li>Biotransformação rápida</li>
+          <li>Não alergênico</li>
+          <li>Quimicamente estável</li>
+          <li>Baixo custo</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>⚗️ Vasoconstritores: Funções</h4>
+        <ul>
+          <li>Absorção mais lenta do anestésico</li>
+          <li>Tempo de trabalho adequado</li>
+          <li>Baixo risco de efeitos tóxicos</li>
+          <li>Hemostasia local</li>
+          <li>Exemplos: adrenalina, noradrenalina, felipressina, fenilefrina</li>
+        </ul>
+        <div class="alert alert-danger" style="margin-top:12px;">
+          <div class="alert-icon">⚠️</div>
+          <div class="alert-content">
+            <h4>Importante!</h4>
+            <p>Sempre utilizar anestésico local <strong>COM vasoconstritor</strong> em odontopediatria.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="content-h2">Anestésicos Aprovados para Odontopediatria</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Anestésico</th>
+            <th>Concentração</th>
+            <th>Vasoconstritor</th>
+            <th>Duração Polpa (Infiltrativa)</th>
+            <th>Duração Polpa (Bloqueio)</th>
+            <th>Dose Máx. (mg/kg)</th>
+            <th>Dose Máx. Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lidocaína</strong></td>
+            <td>2%</td>
+            <td>Epinefrina 1:100.000</td>
+            <td>60 min</td>
+            <td>85 min</td>
+            <td><strong>4,4 mg/kg</strong></td>
+            <td>300 mg</td>
+          </tr>
+          <tr>
+            <td><strong>Mepivacaína</strong></td>
+            <td>2%</td>
+            <td>Epinefrina 1:100.000</td>
+            <td>60 min</td>
+            <td>85 min</td>
+            <td>4,4 mg/kg</td>
+            <td>300 mg</td>
+          </tr>
+          <tr>
+            <td><strong>Mepivacaína</strong></td>
+            <td>2%</td>
+            <td>Levonordefrina 1:200.000</td>
+            <td>50 min</td>
+            <td>75 min</td>
+            <td>4,4 mg/kg</td>
+            <td>300 mg</td>
+          </tr>
+          <tr>
+            <td><strong>Articaína</strong></td>
+            <td>4%</td>
+            <td>Epinefrina 1:100.000</td>
+            <td>60 min</td>
+            <td>90 min</td>
+            <td>7,0 mg/kg</td>
+            <td>500 mg</td>
+          </tr>
+          <tr>
+            <td><strong>Articaína</strong></td>
+            <td>4%</td>
+            <td>Epinefrina 1:200.000</td>
+            <td>45 min</td>
+            <td>60 min</td>
+            <td>6,0 mg/kg</td>
+            <td>400 mg</td>
+          </tr>
+          <tr>
+            <td><strong>Prilocaína</strong></td>
+            <td>3%</td>
+            <td>Felipressina 0,03 UI</td>
+            <td>60 min</td>
+            <td>90 min</td>
+            <td>6,0 mg/kg</td>
+            <td>400 mg</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="content-h2">Tipos de Agulhas por Técnica</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Agulha</th><th>Comprimento</th><th>Indicação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Extracurta</strong></td><td>10 mm</td><td>Todos os dentes decíduos superiores e inferiores na técnica infiltrativa</td></tr>
+          <tr><td><strong>Curta</strong></td><td>20 mm</td><td>Dentes permanentes na técnica infiltrativa e pterigomandibular em crianças até 12 anos</td></tr>
+          <tr><td><strong>Longa</strong></td><td>32 mm</td><td>Pterigomandibular em adolescentes e adultos</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="anatomy-box">
+      <h4>🦷 Diferenças Anatômicas da Criança vs Adulto (Relevantes para Anestesia)</h4>
+      <ul>
+        <li><strong>Osso mais poroso:</strong> espaços medulares mais amplos → anestésico difunde melhor</li>
+        <li><strong>Forame mandibular mais baixo:</strong> posicionado inferiormente ao plano oclusal em crianças pequenas</li>
+        <li><strong>Ramo ascendente mais curto</strong></li>
+        <li><strong>Menor largura anteroposterior do ramo da mandíbula</strong></li>
+        <li><strong>Ângulo goníaco mais aberto</strong> (quanto mais jovem)</li>
+        <li><strong>Língula situada inferiormente ao plano oclusal</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: TÉCNICAS -->
+  <div id="tab-tecnicas" class="tab-panel">
+
+    <!-- ANESTESIA TÓPICA -->
+    <div class="steps-container">
+      <div class="steps-header">
+        <div>
+          <h3>Anestesia Tópica</h3>
+          <p style="font-size:13px;opacity:0.8;margin-top:2px;">Utilizar SEMPRE antes da puntura da agulha</p>
+        </div>
+        <span class="badge">Obrigatória</span>
+      </div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Antissepsia bucal</h4>
+          <p>Realizar bochecho ou limpeza com gluconato de clorexidina 0,12%.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Secar a mucosa</h4>
+          <p>Secar a superfície mucosa com gaze ou bolinha de algodão estéril antes da aplicação.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Aplicar anestésico tópico</h4>
+          <p>Usar pequena quantidade de anestésico (pomada ou gel) com cotonete ou pinça clínica e bolinha de algodão estéreis. Manter sob rolinho de algodão.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Aguardar 2–3 minutos</h4>
+          <p>Manter o anestésico tópico por 2 a 3 minutos para efeito completo.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Usar sugador</h4>
+          <p>Usar sempre o sugador durante a aplicação para que a criança não degluta o anestésico.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANESTESIA INFILTRATIVA -->
+    <div class="steps-container" style="margin-top:24px;">
+      <div class="steps-header">
+        <h3>Anestesia Infiltrativa</h3>
+        <span class="badge">Técnica Principal</span>
+      </div>
+      <div class="step">
+        <div class="step-num">📋</div>
+        <div class="step-content">
+          <h4>Indicações</h4>
+          <ul>
+            <li>Todos os dentes superiores decíduos e permanentes</li>
+            <li>Incisivos inferiores decíduos e permanentes</li>
+            <li>Arcada superior: nervo alveolar superior (anterior, médio e posterior)</li>
+            <li>Arcada inferior: nervo bucal e mentoniano</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Posicionamento da agulha</h4>
+          <p>Inserir a agulha no fundo do vestíbulo, com inclinação de 45° com o osso alveolar/vestibular. Atingir profundidade próxima ao ápice dos dentes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Depositar a solução</h4>
+          <p>Depositar a solução adjacente ao osso, de forma lenta (1–2 min por tubete). O bisel da agulha deve estar voltado para o osso, sem tocar o periósteo.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">⚠️</div>
+        <div class="step-content">
+          <h4>Observações importantes</h4>
+          <ul>
+            <li>Incisivos centrais: anestesiar também a região contralateral</li>
+            <li>Usar agulha extracurta para todos os dentes decíduos superiores</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANESTESIA PTERIGOMANDIBULAR -->
+    <div class="steps-container" style="margin-top:24px;">
+      <div class="steps-header">
+        <h3>Anestesia Pterigomandibular (Bloqueio do Nervo Alveolar Inferior)</h3>
+        <span class="badge">Mandíbula Posterior</span>
+      </div>
+      <div class="step">
+        <div class="step-num">📋</div>
+        <div class="step-content">
+          <h4>Indicação</h4>
+          <p>Anestesia dos dentes inferiores posteriores decíduos e permanentes. Realiza-se o bloqueio do nervo alveolar inferior e bucal.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Localizar o trígono retromolar</h4>
+          <p>Identificar o trígono formado pela prega pterigomandibular e a margem anterior do ramo da mandíbula.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Abertura máxima da boca</h4>
+          <p>Solicitar que a criança abra a boca o máximo que possa.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Posicionar a seringa</h4>
+          <p>Posicionar a seringa <strong>entre os dois molares decíduos do lado oposto</strong> ao que se deseja anestesiar.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Inserção da agulha</h4>
+          <p>Inserir entre a crista oblíqua interna e a rafe pterigomandibular. Posicionar lateral à fossa pterigomandibular até próximo ao nervo alveolar inferior na região da língula.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Depositar lentamente</h4>
+          <p>Inserir a agulha até próximo ao osso e depositar a solução lentamente.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:24px;">
+      <table>
+        <thead><tr><th colspan="2">🔑 Altura da Agulha na Pterigomandibular por Faixa Etária</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Menores de 6 anos</strong></td><td>Inferiormente ao plano oclusal</td></tr>
+          <tr><td><strong>6 a 10 anos</strong></td><td>Ao nível do plano oclusal do molar permanente</td></tr>
+          <tr><td><strong>10 a 16 anos</strong></td><td>5 mm acima do plano oclusal</td></tr>
+          <tr><td><strong>Acima de 16 anos</strong></td><td>10 mm acima do plano oclusal</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box"><strong>💡 Dica:</strong> Usar agulha curta em crianças e agulha longa em adolescentes para a pterigomandibular.</div>
+
+    <!-- ANESTESIAS ESPECÍFICAS -->
+    <h2 class="content-h2">Técnicas Anestésicas Específicas</h2>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h4>1. Anestesia Transpapilar / Intrapapilar</h4>
+        <p style="font-size:13.5px;margin-bottom:8px;"><strong>Indicações:</strong></p>
+        <ul>
+          <li>Colocação de grampo para isolamento absoluto</li>
+          <li>Iniciar anestesia na região palatina</li>
+        </ul>
+        <p style="font-size:13.5px;margin-top:8px;"><strong>Técnica:</strong> Iniciar com agulha paralela ao plano oclusal, atravessando a papila gengival de vestibular para palatino, depositando anestésico continuamente sem tocar na crista óssea.</p>
+      </div>
+      <div class="info-box">
+        <h4>2. Anestesia Palatina</h4>
+        <p style="font-size:13.5px;margin-bottom:8px;"><strong>Indicação:</strong> Anestesia da mucosa palatina.</p>
+        <ul>
+          <li>Inserir agulha com bisel paralelo ao osso na região palatina</li>
+          <li>Palato duro inervado pelos nervos palatino maior e incisivo</li>
+          <li>Agulha fica próxima ao periósteo → técnica dolorosa</li>
+          <li><strong>Sempre precedida pela transpapilar!</strong></li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>3. Anestesia Intrapulpar</h4>
+        <div class="alert alert-danger" style="margin:8px 0;">
+          <div class="alert-icon">🚫</div>
+          <div class="alert-content"><p><strong>Evitar na clínica de odontopediatria</strong> — muito dolorosa. Usar apenas como última opção durante biopulpectomia quando outras técnicas falharem.</p></div>
+        </div>
+      </div>
+      <div class="info-box">
+        <h4>4. Anestesia Intraligamentar</h4>
+        <p style="font-size:13.5px;margin-bottom:8px;"><strong>Indicações:</strong></p>
+        <ul>
+          <li>Distúrbios hemorrágicos</li>
+          <li>Falha do bloqueio ou infiltrativa (última opção)</li>
+        </ul>
+        <p style="font-size:13.5px;margin-top:8px;"><strong>Contraindicações:</strong></p>
+        <ul>
+          <li>Inflamação/infecção na área</li>
+          <li>Uso de rotina (muito dolorosa)</li>
+        </ul>
+        <p style="font-size:13.5px;margin-top:8px;">Técnica: Introdução da agulha no ligamento periodontal → infiltrar 0,2 mL. Duração limitada (~30 minutos).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: CALCULADORA -->
+  <div id="tab-calc" class="tab-panel">
+    <div id="calculator-box">
+      <h3>🧮 Calculadora de Dose Anestésica</h3>
+      <p class="subtitle">Calcule a dose máxima segura por peso da criança</p>
+
+      <div class="calc-formula">
+        <strong>Fórmula:</strong> Peso (kg) × Dose máx. (mg/kg) ÷ Concentração por tubete (mg) = N° máximo de tubetes<br>
+        <strong>Cada tubete = 1,8 mL | Lidocaína 2%: 36 mg/tubete | Não exceder 300 mg totais</strong>
+      </div>
+
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>Peso da criança (kg)</label>
+          <input type="number" id="peso-input" placeholder="Ex: 20" min="1" max="100">
+        </div>
+        <div class="calc-field">
+          <label>Anestésico</label>
+          <select id="anest-select">
+            <option value="4.4,2,300">Lidocaína 2% c/ Epinefrina 1:100.000</option>
+            <option value="4.4,2,300">Mepivacaína 2% c/ Epinefrina 1:100.000</option>
+            <option value="7.0,4,500">Articaína 4% c/ Epinefrina 1:100.000</option>
+            <option value="6.0,4,400">Articaína 4% c/ Epinefrina 1:200.000</option>
+            <option value="6.0,3,400">Prilocaína 3% c/ Felipressina</option>
+          </select>
+        </div>
+        <button id="calc-btn" onclick="calcularDose()">Calcular</button>
+      </div>
+
+      <div id="calc-result">
+        <h4>📊 Resultado do Cálculo</h4>
+        <div class="result-line">Dose máxima permitida: <strong id="r-dose">—</strong> mg</div>
+        <div class="result-line">Concentração por tubete: <strong id="r-conc">—</strong> mg/tubete</div>
+        <div class="result-line" style="font-size:16px;font-weight:700;margin-top:8px;">
+          Máximo de tubetes: <strong id="r-tubetes" style="font-size:20px;">—</strong>
+        </div>
+        <div id="r-warning" style="margin-top:10px;font-size:13px;color:#92400e;background:#fffbeb;padding:8px 12px;border-radius:6px;display:none;"></div>
+      </div>
+    </div>
+
+    <div style="max-width:600px;margin-top:8px;">
+      <h3 class="content-h3">Exemplo Clínico</h3>
+      <div class="case-study">
+        <div class="case-header">
+          <div class="case-id">Exemplo</div>
+          <h3>Criança de 20 kg — Lidocaína 2%</h3>
+        </div>
+        <div class="case-body">
+          <div class="case-row">
+            <span class="case-label">Passo 1</span>
+            <span class="case-value">Peso × dose máxima → 20 kg × 4,4 mg/kg = <strong>88 mg</strong></span>
+          </div>
+          <div class="case-row">
+            <span class="case-label">Passo 2</span>
+            <span class="case-value">Concentração por tubete → 2% × 1,8 mL = <strong>36 mg/tubete</strong></span>
+          </div>
+          <div class="case-row">
+            <span class="case-label">Passo 3</span>
+            <span class="case-value">88 mg ÷ 36 mg = <strong>2,4 tubetes</strong> → usar no máximo 2 tubetes</span>
+          </div>
+          <div class="case-row">
+            <span class="case-label">Limite total</span>
+            <span class="case-value">88 mg &lt; 300 mg (limite absoluto) ✅ — o limite por peso é mais restritivo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-danger">
+        <div class="alert-icon">⛔</div>
+        <div class="alert-content">
+          <h4>Alertas Clínicos de Toxicidade</h4>
+          <ul>
+            <li><strong>Sinais precoces:</strong> agitação, confusão, sabor metálico, zumbido, visão turva</li>
+            <li><strong>Sinais graves:</strong> convulsões, inconsciência, parada cardiorrespiratória</li>
+            <li><strong>Aspiração positiva:</strong> reposicionar a agulha e NÃO injetar — indica posição intravascular</li>
+            <li><strong>Injeção intravascular:</strong> observar o refluxo de sangue antes de cada injeção</li>
+            <li><strong>Precauções:</strong> sempre aspirar, injetar lentamente (1–2 min/tubete), controlar dose total</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: COMPLICAÇÕES -->
+  <div id="tab-complic" class="tab-panel">
+    <h2 class="content-h2">Complicações da Anestesia Local</h2>
+
+    <div class="steps-container">
+      <div class="steps-header"><h3>Úlcera Traumática — Complicação Mais Comum</h3><span class="badge">Alta Frequência</span></div>
+      <div class="step">
+        <div class="step-num">📋</div>
+        <div class="step-content">
+          <h4>O que é</h4>
+          <p>Mordedura de tecidos moles insensíveis (lábio inferior, língua ou bochecha) após anestesia. É a intercorrência anestésica mais frequente em odontopediatria.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">🔧</div>
+        <div class="step-content">
+          <h4>Conduta</h4>
+          <ul>
+            <li>Limpeza com gluconato de clorexidina 0,12% (sem álcool)</li>
+            <li>Lesão extensa: prescrever anti-inflamatório tópico</li>
+            <li>Dor: analgésico por no máximo 3 dias</li>
+            <li>Laser diodo de baixa potência: reduz inflamação e facilita cicatrização</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">✅</div>
+        <div class="step-content">
+          <h4>Prevenção</h4>
+          <p>Avisar os responsáveis para a criança <strong>não morder a área anestesiada</strong> e evitar alimentos consistentes e quentes até passar o efeito da anestesia.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-grid" style="margin-top:20px;">
+      <div class="info-box">
+        <h4>🩸 Hematoma</h4>
+        <p style="font-size:13.5px;">Efusão sanguínea nos tecidos por ruptura de vasos → pigmentação vermelha/arroxeada na mucosa.</p>
+        <p style="font-size:13.5px;margin-top:8px;"><strong>Conduta:</strong> Compressa morna por 24 horas (bochechos mornos).</p>
+      </div>
+      <div class="info-box">
+        <h4>😣 Dor Pós-Anestésica</h4>
+        <p style="font-size:13.5px;">Pode ocorrer por infecção local, injeção intramuscular, trauma ou velocidade de administração.</p>
+        <p style="font-size:13.5px;margin-top:8px;"><strong>Conduta:</strong></p>
+        <ul>
+          <li>Sem infecção: analgésico por máx. 3 dias</li>
+          <li>Com infecção (febre + dor): analgésico + antibiótico</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>😬 Trismo</h4>
+        <p style="font-size:13.5px;">Dificuldade de abrir a boca. Causa mais comum: trauma no músculo.</p>
+        <p style="font-size:13.5px;margin-top:8px;"><strong>Conduta:</strong></p>
+        <ul>
+          <li>Compressas mornas nas primeiras 48h</li>
+          <li>Analgésicos por máx. 3 dias</li>
+          <li>Antibiótico se houver infecção</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>😶 Paralisia Facial</h4>
+        <p style="font-size:13.5px;">Reação temporária quando solução atinge o nervo facial no espaço pterigomandibular. Observa-se relaxamento dos músculos da face.</p>
+        <p style="font-size:13.5px;margin-top:8px;"><strong>Conduta:</strong> Apenas acompanhamento — não é necessário tratamento.</p>
+      </div>
+      <div class="info-box">
+        <h4>⚡ Parestesia</h4>
+        <p style="font-size:13.5px;">Perda prolongada de sensibilidade por hemorragia na bainha nervosa. Mais associada à <strong>prilocaína e articaína</strong>.</p>
+        <p style="font-size:13.5px;margin-top:8px;"><strong>Conduta:</strong> Observação a cada 2 meses. Maioria resolve em até 8 semanas. Evitar nova anestesia na área.</p>
+      </div>
+      <div class="info-box">
+        <h4>⚠️ Raras: Fratura de Agulha, Lipotímia, Alergia</h4>
+        <p style="font-size:13.5px;">Podem ocorrer em crianças, mas são rarísimas.</p>
+        <p style="font-size:13.5px;margin-top:8px;"><strong>Prevenção fratura:</strong> Não dobrar nem inserir totalmente a agulha nos tecidos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: RECOMENDAÇÕES -->
+  <div id="tab-rec" class="tab-panel">
+    <h2 class="content-h2">Recomendações Gerais para Anestesia Local em Crianças</h2>
+
+    <div class="tip-box"><strong>💡 Adaptação comportamental</strong> antes da anestesia leva ao vínculo profissional-paciente e aumenta chance de sucesso na técnica.</div>
+
+    <div class="quick-ref">
+      <div class="qr-item"><div class="label">Anestesia tópica</div><div class="value">Sempre usar</div></div>
+      <div class="qr-item"><div class="label">Tempo de espera após</div><div class="value">2–3 min</div></div>
+      <div class="qr-item"><div class="label">Velocidade de injeção</div><div class="value">1–2 min/tubete</div></div>
+      <div class="qr-item"><div class="label">Bisel da agulha</div><div class="value">Para o osso</div></div>
+      <div class="qr-item"><div class="label">Aspirar</div><div class="value">Sempre</div></div>
+      <div class="qr-item"><div class="label">Temperatura solução</div><div class="value">Temperatura corporal</div></div>
+    </div>
+
+    <div class="alert alert-info">
+      <div class="alert-icon">📋</div>
+      <div class="alert-content">
+        <h4>O que registrar na ficha clínica</h4>
+        <ul>
+          <li>Tipo de injeção (infiltrativa, bloqueio, intraligamentar)</li>
+          <li>Tipo e dose do anestésico (mg)</li>
+          <li>Vasoconstritor (mg ou concentração)</li>
+          <li>Quantidade de tubetes utilizados</li>
+          <li>Reação do paciente</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert alert-warning">
+      <div class="alert-icon">👨‍👩‍👧</div>
+      <div class="alert-content">
+        <h4>Orientações aos Responsáveis</h4>
+        <p>Sempre avisar os pais/responsáveis para ficarem vigilantes e evitar que a criança <strong>morda os tecidos da região anestesiada</strong>. Restrição alimentar (alimentos quentes e duros) até passar o efeito.</p>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- end anest-tab -->
+</div>
+
+<!-- ISOLAMENTO -->
+<div id="section-isolamento" class="section">
+  <h1 class="section-title">🦷 Isolamento do Campo Operatório</h1>
+  <p class="section-subtitle">O isolamento tem por objetivo controlar a umidade ao redor do dente em tratamento e minimizar a contaminação bacteriana. É fundamental para o sucesso das restaurações.</p>
+
+  <div class="alert alert-success">
+    <div class="alert-icon">✅</div>
+    <div class="alert-content">
+      <h4>Evidência Científica</h4>
+      <p>As melhores evidências disponíveis sugerem que o uso de <strong>isolamento absoluto em restaurações diretas</strong> pode levar a uma maior longevidade das restaurações.</p>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('isol-tab', 'isol-t1', this)">Isolamento Absoluto</button>
+    <button class="tab-btn" onclick="showTab('isol-tab', 'isol-t2', this)">Isolamento Relativo</button>
+    <button class="tab-btn" onclick="showTab('isol-tab', 'isol-t3', this)">Grampos & Perfurador</button>
+  </div>
+  <div id="isol-tab">
+  <div id="isol-t1" class="tab-panel active">
+    <p class="body-text">O isolamento absoluto é realizado com o conjunto <strong>lençol de borracha + arco + grampo</strong>. É o meio mais efetivo para se obter um campo limpo, seco e com melhor visibilidade. Mais seguro no sentido de proteger tecidos bucais e prevenir deglutição/aspiração de materiais.</p>
+    <div class="alert alert-warning">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-content">
+        <h4>Importante</h4>
+        <p>O grampo pode causar dor e desconforto — justifica necessidade de <strong>anestesia local</strong> previamente à sua inserção. Pacientes alérgicos: usar lençol de borracha sem látex.</p>
+      </div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Isolamento Absoluto</h3><span class="badge">14 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Escolher o grampo</h4><p>Selecionar de acordo com o dente a ser restaurado (ver tabela de grampos).</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Determinar a área de isolamento</h4><ul><li>Região anterior: dente + 1 adjacente de cada lado (máx. canino a canino)</li><li>Região posterior (cavidade oclusal): isolar apenas o dente a ser tratado</li><li>Região posterior (ocluso-proximal): dente + pelo menos 1 mesial e 1 distal</li><li>Tratamento endodôntico: isolar somente o dente a ser tratado</li></ul></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Amarrar fio dental ao grampo</h4><p>Amarrar ~30 cm de fio dental ao grampo para facilitar o resgate caso se solte durante o procedimento, evitando aspiração ou deglutição.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Verificar o ajuste do grampo</h4><p>Verificar o ajuste do grampo na cervical do dente com auxílio de pinça porta-grampos (tipo Palmer).</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Fixar o lençol de borracha</h4><p>Fixar o lençol de borracha por trás do arco (tipo Young).</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Posicionar o conjunto</h4><p>Posicionar o conjunto arco-lençol sobre a face do paciente.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Demarcar as perfurações</h4><p>Demarcar os locais das perfurações no lençol com auxílio de uma caneta.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Perfurar o lençol</h4><p>Perfurar o lençol de borracha com o perfurador de Ainsworth, escolhendo os orifícios específicos conforme os dentes a serem isolados.</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Lubrificar as bordas</h4><p>Lubrificar as bordas dos orifícios com gel lubrificante ou vaselina para facilitar o posicionamento.</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Posicionar o isolamento</h4><ul><li><strong>Opção A:</strong> Levar lençol/arco e depois o grampo com pinça tipo Palmer</li><li><strong>Opção B:</strong> Levar conjunto lençol/arco + grampo com pinça Palmer</li><li><strong>Opção C:</strong> Colocar grampo sem asa no dente e depois adaptar o lençol/arco</li></ul></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Remover o lençol das projeções laterais</h4><p>Remover o lençol de borracha das projeções laterais do grampo com asa, usando espátula de ponta romba.</p></div></div>
+      <div class="step"><div class="step-num">12</div><div class="step-content"><h4>Passar fio dental interdental</h4><p>Passar o fio dental no espaço interdental para certificar a adaptação.</p></div></div>
+      <div class="step"><div class="step-num">13</div><div class="step-content"><h4>Verificar adaptação e posicionar sugador</h4><p>Colocar o sugador de saliva sob o dique de borracha e fazer amarrias com fio dental em cada dente isolado.</p></div></div>
+      <div class="step"><div class="step-num">14</div><div class="step-content"><h4>Barreira gengival (se necessário)</h4><p>Utilizar barreira gengival fotopolimerizável nas áreas de difícil vedamento.</p></div></div>
+      <div class="step"><div class="step-num">🔚</div><div class="step-content"><h4>Remoção do isolamento</h4><p>Ao término do procedimento: iniciar com o grampo, depois as amarrias; cortar a borracha entre as ameias interproximais e remover o conjunto arco-lençol.</p></div></div>
+    </div>
+  </div>
+  <div id="isol-t2" class="tab-panel">
+    <p class="body-text">O isolamento relativo deve ser realizado <strong>a quatro mãos (operador + auxiliar)</strong>. É indicado para procedimentos de curta duração: exame intraoral, aplicação tópica de flúor, polimento dental, aplicação de selante, restaurações provisórias, cimentação de bandas, coroas e provisórios.</p>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Isolamento Relativo</h3><span class="badge">4 Mãos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Colocar os roletes de algodão</h4><p>Colocar um rolete de algodão no fundo do sulco, na região vestibular do dente a ser restaurado, e outro por lingual/palatino.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Ativar o sugador</h4><p>Usar um sugador para aspiração contínua de saliva e outros líquidos durante todo o procedimento operatório.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Trocar o rolete (momento crítico)</h4><ul><li>3.1. Posicionar um rolete sobre a oclusal do dente em restauração</li><li>3.2. Remover o rolete previamente adaptado na região operatória</li><li>3.3. Deslocar o rolete oclusal para o local do removido (vestibular/lingual)</li><li>3.4. Usar sugador continuamente durante todo o procedimento</li></ul></div></div>
+    </div>
+    <div class="alert alert-warning"><div class="alert-icon">⚠️</div><div class="alert-content"><h4>Atenção</h4><p>Reservar quantidade suficiente de roletes de algodão para trocas durante todo o período necessário. A troca do rolete é o <strong>momento mais crítico</strong> da técnica e requer muita atenção de ambos operador e auxiliar.</p></div></div>
+  </div>
+  <div id="isol-t3" class="tab-panel">
+    <h2 class="content-h2">Grampos para Odontopediatria</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Grampo</th><th>Indicação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>0 e 00</strong></td><td>Pequenos pré-molares e dentes anteriores decíduos</td></tr>
+          <tr><td><strong>210, 211 e 212</strong></td><td>Dentes anteriores</td></tr>
+          <tr><td><strong>12A, 13A, 14 e 14A</strong></td><td>Molares parcialmente irrompidos ou de anatomia irregular</td></tr>
+          <tr><td><strong>26</strong></td><td>Molares</td></tr>
+          <tr><td><strong>200</strong></td><td>Molares inferiores</td></tr>
+          <tr><td><strong>201, 202 e 205</strong></td><td>Molares superiores</td></tr>
+          <tr><td><strong>206, 207 e 208</strong></td><td>Pré-molares superiores e inferiores</td></tr>
+          <tr><td><strong>W8A</strong></td><td>Molares e pequenos molares parcialmente irrompidos</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2 class="content-h2">Orifícios do Perfurador de Ainsworth</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Orifício</th><th>Indicação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1 (mais amplo)</strong></td><td>Molares permanentes maiores; dente que receberá grampo sem asa</td></tr>
+          <tr><td><strong>2</strong></td><td>Molares permanentes menores, segundos molares decíduos</td></tr>
+          <tr><td><strong>3</strong></td><td>Caninos permanentes, pré-molares, primeiros molares decíduos</td></tr>
+          <tr><td><strong>4</strong></td><td>Incisivos superiores, caninos decíduos</td></tr>
+          <tr><td><strong>5 (mais estreito)</strong></td><td>Incisivos inferiores</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- TERAPÊUTICA DA CÁRIE -->
+<div id="section-carie" class="section">
+  <h1 class="section-title">🔬 Terapêutica da Cárie Dentária</h1>
+  <p class="section-subtitle">A terapêutica contemporânea da cárie inclui identificação do risco, compreensão da doença pelo indivíduo e planejamento de ações preventivas complementado por tratamento restaurador quando indicado.</p>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('carie-tab', 'ct1', this)">DFP</button>
+    <button class="tab-btn" onclick="showTab('carie-tab', 'ct2', this)">ART</button>
+    <button class="tab-btn" onclick="showTab('carie-tab', 'ct3', this)">Hall Technique</button>
+    <button class="tab-btn" onclick="showTab('carie-tab', 'ct4', this)">Selantes</button>
+    <button class="tab-btn" onclick="showTab('carie-tab', 'ct5', this)">Proteção Pulpar</button>
+    <button class="tab-btn" onclick="showTab('carie-tab', 'ct6', this)">Remoção Seletiva</button>
+  </div>
+  <div id="carie-tab">
+
+  <div id="ct1" class="tab-panel active">
+    <h2 class="content-h2">Diamino Fluoreto de Prata (DFP)</h2>
+    <p class="body-text">O DFP tem função de <strong>paralisar a evolução da lesão de cárie</strong>. A principal evidência de efetividade é a visualização do <strong>escurecimento da dentina</strong> (cárie paralisada). Nenhuma escavação dentinária é necessária antes da aplicação.</p>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h4>✅ Indicações</h4>
+        <ul>
+          <li>Pacientes com alto risco de cárie com lesões cavitadas ativas em dentes posteriores ou anteriores, sem envolvimento pulpar</li>
+          <li>Lesões em indivíduos com problemas de comportamento ou comprometimento sistêmico</li>
+          <li>Pacientes com múltiplas lesões de cárie não tratáveis em única visita</li>
+          <li>Pacientes sem acesso ou com dificuldades de acesso ao cuidado odontológico clássico</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>⚠️ Desvantagens</h4>
+        <ul>
+          <li>Escurecimento permanente das lesões (mancha preta)</li>
+          <li>Possibilidade de manchar pele e roupa</li>
+          <li>Deve haver consentimento informado do responsável</li>
+        </ul>
+        <div class="alert alert-warning" style="margin-top:10px;">
+          <div class="alert-icon">📋</div>
+          <div class="alert-content"><p>O responsável deve ser esclarecido sobre os benefícios e desvantagens antes de consentir.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Aplicação do DFP</h3><span class="badge">11 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Proteção do paciente</h4><p>Usar babador. Proteger lábios, pele e mucosa circundantes com manteiga de cacau ou vaselina para evitar tatuagem temporária (sem contato com o dente a ser tratado).</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Limpeza da cavidade</h4><p>Remover os detritos da cavidade e, se possível, realizar profilaxia com água e pedra pomes.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Isolamento relativo</h4><p>Realizar isolamento relativo do campo operatório.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Preparar o DFP</h4><p>Colocar uma gota de DFP na parte de baixo do Dappen de plástico.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Carregar o aplicador</h4><p>Umedecer a ponta do aplicador tipo microbrush no DFP e pressionar nas paredes do Dappen para remover excessos.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Secar a cavidade</h4><p>Secar a cavidade gentilmente com jato de ar à distância.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Aplicar o DFP</h4><p>Aplicar o produto em <strong>todas</strong> as superfícies afetadas pela cárie.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Secar os excessos</h4><p>Secar com gaze ou bolinhas de algodão para remover os excessos do produto.</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Manter isolado</h4><p>Manter o campo isolado por mais 3 minutos, se possível.</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Acompanhamento</h4><p>Acompanhar em 2–4 semanas. Se lesões não parecerem paralisadas (escuras e duras), o DFP deve ser reaplicado.</p></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Restauração futura</h4><p>As lesões com cárie paralisadas podem ser restauradas futuramente, ou mantidas com DFP conforme avaliação clínica.</p></div></div>
+    </div>
+  </div>
+
+  <div id="ct2" class="tab-panel">
+    <h2 class="content-h2">Tratamento Restaurador Atraumático (ART)</h2>
+    <p class="body-text">A técnica ART combina dois componentes: <strong>selamento de fóssulas e fissuras</strong> e <strong>restauração de lesões com cavidades em dentina</strong>. Usa instrumentos manuais e CIV de alta viscosidade. Indicada em qualquer ambiente, inclusive campo.</p>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h4>✅ Indicações</h4>
+        <ul>
+          <li>Lesões de cárie em dentina sem envolvimento pulpar</li>
+          <li>Cavidades que permitam uso correto de instrumentos manuais</li>
+          <li>Cavidades circundadas por pelo menos duas paredes axiais</li>
+          <li>Crianças com comportamento não colaborador</li>
+          <li>Pacientes com necessidades especiais</li>
+          <li>Atendimentos em campo (escolas, abrigos, aldeias)</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>🚫 Contraindicações</h4>
+        <ul>
+          <li>Dor espontânea, fístula e/ou exposição pulpar</li>
+          <li>Casos que necessitem preparo com instrumentos rotatórios</li>
+        </ul>
+        <h4 style="margin-top:12px;">🔧 Material Principal</h4>
+        <ul>
+          <li>CIV de alta viscosidade (ionômero de vidro modificado)</li>
+          <li>Machado para esmalte (instrumento manual)</li>
+          <li>Colheres de dentina de vários tamanhos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — ART</h3><span class="badge">15 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Isolamento relativo</h4><p>Realizar isolamento relativo do campo operatório.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Limpeza inicial</h4><p>Limpar o dente, remover biofilme bacteriano e resíduos com bolinha de algodão embebida em água.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Checar e ampliar abertura</h4><p>Checar abertura da cavidade e, se necessário, ampliar com o uso do <strong>machado para esmalte</strong>.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Remoção do tecido cariado</h4><p>Usar colheres de dentina de tamanho apropriado: <strong>iniciar pelas paredes circundantes e junção amelo-dentinária</strong>, finalizar na parede pulpar com extremo cuidado. Remove-se a dentina cariada amolecida (infectada) e mantém-se a dentina afetada (resistente, passível de remineralização).</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Limpeza da cavidade</h4><p>Limpar com bolinhas de algodão embebidas em água ou gluconato de clorexidina 2% e remover detritos.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Condicionar as paredes</h4><p>Condicionar as paredes da cavidade e fissuras adjacentes com ácido, de acordo com as instruções do fabricante.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Lavar</h4><p>Lavar a superfície condicionada com bolinhas de algodão embebidas em água, por duas vezes.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Secar</h4><p>Secar a cavidade com algodão (não usar jato de ar).</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Manipular o CIV</h4><p>Manipular o material restaurador de acordo com as instruções do fabricante.</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Inserção do material</h4><p>Inserir em pequenas porções com a parte convexa da colher de dentina ou seringa tipo Centrix. O material também deve ser inserido nas fissuras adjacentes com ligeiro excesso.</p></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Pressionar com dedo enluvado</h4><p>Pressionar o material com o dedo <strong>enluvado e vaselinado</strong>.</p></div></div>
+      <div class="step"><div class="step-num">12</div><div class="step-content"><h4>Checar oclusão</h4><p>Checar a oclusão imediatamente.</p></div></div>
+      <div class="step"><div class="step-num">13</div><div class="step-content"><h4>Remover excessos</h4><p>Remover o excesso de material com lâminas de bisturi e Hollenback 3S.</p></div></div>
+      <div class="step"><div class="step-num">14</div><div class="step-content"><h4>Aplicar vaselina ou verniz</h4><p>Aplicar uma camada de vaselina ou verniz cavitário sobre a restauração.</p></div></div>
+      <div class="step"><div class="step-num">15</div><div class="step-content"><h4>Orientação pós-operatória</h4><p>Orientar o paciente a <strong>não ingerir nenhum tipo de alimento na primeira hora</strong> após a realização da restauração.</p></div></div>
+    </div>
+  </div>
+
+  <div id="ct3" class="tab-panel">
+    <h2 class="content-h2">Hall Technique — Coroas de Aço sem Preparo</h2>
+    <p class="body-text">A Hall Technique é uma abordagem terapêutica para <strong>molares decíduos cariados</strong>, sem uso de anestesia local, sem preparo do dente ou remoção de tecido cariado, onde a cárie é selada por coroas de aço pré-fabricadas.</p>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h4>✅ Indicações</h4>
+        <ul>
+          <li>Lesões oclusais não cavitadas — se o paciente não aceitar selante ou restauração convencional</li>
+          <li>Lesões oclusais cavitadas — se o paciente não puder aceitar remoção seletiva ou restauração convencional</li>
+          <li>Lesões proximais, cavitadas ou não cavitadas</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>🚫 Contraindicações</h4>
+        <ul>
+          <li>Sintomas e/ou sinais físicos e/ou radiográficos de infecção pulpar</li>
+          <li>Coroas bem destruídas que seriam irreparáveis com técnicas convencionais</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Hall Technique</h3><span class="badge">9 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Remover detritos</h4><p>Remover os detritos da cavidade. <strong>Não é necessário remover tecido cariado nem realizar preparo.</strong></p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Avaliar forma e oclusão</h4><p>Avaliar a forma do molar decíduo e a oclusão para escolher o tamanho adequado da coroa.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Separador de borracha</h4><p>Usar afastador de borracha se os contatos interproximais forem justos.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Proteção das vias aéreas</h4><p>Usar sugador e manter o encosto da cadeira levantado para evitar deglutição da coroa.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Selecionar a coroa</h4><p>Escolher o tamanho mais apropriado para o dente.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Ajustar cervical (se necessário)</h4><p>Ajustar e/ou recortar a cervical da coroa, se necessário.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Preencher com CIV</h4><p>Preencher a coroa com cimento de ionômero de vidro.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Encaixar a coroa</h4><p>Encaixar a coroa no dente. Instruir a criança a morder a coroa no lugar quando solicitada.</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Limpar excessos</h4><p>Limpar o excesso de cimento com sonda e fio dental.</p></div></div>
+    </div>
+    <div class="alert alert-info"><div class="alert-icon">👶</div><div class="alert-content"><h4>Comunicação com a criança</h4><p>Avisar previamente que: a) terá que ajudar mordendo a coroa quando solicitada; b) inicialmente o cimento não terá sabor agradável (pode ser como sal e/ou vinagre).</p></div></div>
+  </div>
+
+  <div id="ct4" class="tab-panel">
+    <h2 class="content-h2">Selante de Fóssulas e Fissuras</h2>
+    <p class="body-text">Material aplicado nas fóssulas e fissuras de dentes suscetíveis à cárie, que se liga micromecanicamente ao local, evitando acesso por bactérias cariogênicas.</p>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicações</h4><ul><li>Fóssulas e fissuras com risco de lesão cárie</li><li>Superfícies oclusais com lesões incipientes não cavitadas, ou cavitadas em esmalte</li></ul></div>
+      <div class="info-box"><h4>🔧 Tipos de Selante</h4><ul><li>CIV convencional</li><li>CIV modificado por resina (fotopolimerizável)</li><li>Selante resinoso — requer controle rigoroso de umidade</li></ul></div>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>Etapa</th><th>CIV Convencional</th><th>CIV Mod. por Resina</th><th>Resinoso</th></tr></thead><tbody>
+      <tr><td>1</td><td colspan="3">Profilaxia; limpar superfície sem preparação mecânica</td></tr>
+      <tr><td>2</td><td colspan="3">Lavar abundantemente</td></tr>
+      <tr><td>3</td><td colspan="3">Isolar o campo operatório</td></tr>
+      <tr><td>4</td><td>Condicionar conf. fabricante</td><td>Condicionar conf. fabricante</td><td>Ácido fosfórico 37% por 30s</td></tr>
+      <tr><td>5</td><td colspan="2">Lavar e secar (manter isolamento)</td><td>Secar até aspecto opaco do esmalte</td></tr>
+      <tr><td>6</td><td colspan="2">Aplicar selante com explorador/espátula/Centrix nas fissuras</td><td>Aplicar selante somente nos sulcos e fissuras</td></tr>
+      <tr><td>7</td><td>Pressionar com dedo enluvado e vaselinado</td><td>Remover excessos</td><td>Polimerizar conf. fabricante</td></tr>
+      <tr><td>8</td><td>Remover excessos, reaplicar vaselina</td><td>Polimerizar conf. fabricante</td><td>Aplicar verniz ou finish gloss</td></tr>
+      <tr><td>9+</td><td>Remover isolamento, checar oclusão, orientar não comer por 1h</td><td>Remover isolamento, checar oclusão, reavaliar periodicamente</td><td>Remover isolamento, checar oclusão, reavaliar periodicamente</td></tr>
+    </tbody></table></div>
+  </div>
+
+  <div id="ct5" class="tab-panel">
+    <h2 class="content-h2">Proteção Indireta do Complexo Dentino-Pulpar</h2>
+    <p class="body-text">Camada fina de material aplicada sobre os túbulos dentinários da parede pulpar de uma cavidade profunda, atuando como barreira protetora entre o material restaurador e a polpa normal.</p>
+    <div class="info-grid">
+      <div class="info-box"><h4>🎯 Objetivos</h4><ul><li>Preservar a vitalidade pulpar</li><li>Formação de dentina terciária</li><li>Minimizar a microinfiltração bacteriana</li></ul></div>
+      <div class="info-box"><h4>🔧 Materiais por Profundidade</h4><ul><li>Cavidade pouco profunda: sistema adesivo</li><li>Cavidade de média profundidade: CIV ou sistema adesivo</li><li>Cavidade profunda: hidróxido de cálcio nos pontos mais profundos + CIV</li></ul></div>
+    </div>
+    <div class="alert alert-warning"><div class="alert-icon">⚠️</div><div class="alert-content"><h4>Evidências</h4><p>Não há evidências sobre a superioridade entre os materiais protetores. Recomenda-se aplicar o cimento de hidróxido apenas nos <strong>pontos mais profundos da parede de fundo</strong>, sem estender às paredes circundantes.</p></div></div>
+  </div>
+
+  <div id="ct6" class="tab-panel">
+    <h2 class="content-h2">Remoção Seletiva do Tecido Cariado (Uma Etapa)</h2>
+    <p class="body-text">Abordagem contemporânea que não recomenda a remoção <em>completa</em> do tecido cariado, visando preservar mais estrutura dental e reduzir o risco de exposição pulpar. Remove-se a dentina amolecida infectada; preserva-se a dentina resistente afetada.</p>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicação</h4><ul><li>Lesões cavitadas profundas</li><li>Estrutura dental remanescente suficiente para receber a restauração</li><li>Sem relato de dor espontânea, fístula e/ou envolvimento pulpar</li></ul></div>
+      <div class="info-box"><h4>❌ Quando NÃO usar</h4><ul><li>Dor espontânea</li><li>Fístula</li><li>Exposição pulpar</li><li>Sinais radiográficos de comprometimento interradicular/periapical</li></ul></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Remoção Seletiva</h3></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Anestesiar o local</h4></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Remover tecido cariado seletivamente</h4><p>Com curetas manuais e/ou brocas esféricas em <strong>baixa rotação</strong>: remove-se a dentina amolecida infectada; preserva-se a dentina resistente afetada.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Preparar a superfície</h4><p>Preparar a superfície de esmalte e dentina de acordo com o material escolhido.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Aplicar base protetora</h4><p>Aplicar uma base protetora biocompatível (CIV ou HC).</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Restaurar</h4><p>Restaurar com o material escolhido, seguindo as orientações do fabricante.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Checar oclusão e acompanhar</h4></div></div>
+    </div>
+    <div class="alert alert-warning"><div class="alert-icon">🧒</div><div class="alert-content"><h4>Manejo Comportamental</h4><p>O uso de instrumentos rotatórios pode aumentar o estresse de crianças; portanto, deve ser evitado em crianças mais ansiosas. Prefira instrumentos manuais sempre que possível.</p></div></div>
+  </div>
+
+  </div>
+</div>
+
+<!-- RESTAURAÇÕES -->
+<div id="section-restauracoes" class="section">
+  <h1 class="section-title">🔧 Restaurações em Odontopediatria</h1>
+  <p class="section-subtitle">Escolha do material adequado considerando: cooperação do paciente, extensão da lesão, número de superfícies envolvidas, risk de cárie e expectativa de longevidade.</p>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('rest-tab', 'rt1', this)">Resina Composta</button>
+    <button class="tab-btn" onclick="showTab('rest-tab', 'rt2', this)">Ionômero de Vidro</button>
+    <button class="tab-btn" onclick="showTab('rest-tab', 'rt3', this)">Coroa de Acetato</button>
+    <button class="tab-btn" onclick="showTab('rest-tab', 'rt4', this)">Coroa de Aço Conv.</button>
+    <button class="tab-btn" onclick="showTab('rest-tab', 'rt5', this)">Critérios de Escolha</button>
+  </div>
+  <div id="rest-tab">
+
+  <div id="rt1" class="tab-panel active">
+    <h2 class="content-h2">Restauração com Resina Composta</h2>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicações</h4><ul><li>Restaurações em dentes anteriores e posteriores</li><li>Coroas estéticas em dentes decíduos</li></ul></div>
+      <div class="info-box"><h4>⚠️ Cuidados</h4><ul><li>Mais sensível à técnica que o amálgama</li><li>Exige tempo de trabalho maior</li><li>Desaconselhada em pacientes com múltiplas lesões e higiene oral deficiente</li><li>Não indicada quando isolamento ou cooperação é questionável</li></ul></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Resina Composta</h3><span class="badge">11 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Anestesia</h4><p>Anestesiar o local.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Remoção de tecido cariado</h4><p>Com curetas manuais e/ou brocas esféricas em baixa rotação.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Condicionamento ácido</h4><p>Aplicar ácido fosfórico 37%: <strong>esmalte por 30 segundos, dentina por 15 segundos</strong>.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Lavar abundantemente com água</h4></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Aplicar sistema adesivo</h4><p>De acordo com as instruções do fabricante.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Inserção da resina em incrementos</h4><p>Inserir a resina em <strong>pequenos incrementos de 2 mm de maneira oblíqua</strong>. Em restaurações oclusoproximais: sempre usar matriz e cunha devidamente adaptadas.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Fotopolimerizar cada camada</h4><p>De acordo com as instruções do fabricante e especificidade do aparelho fotopolimerizador.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Checar oclusão e contatos</h4><p>Avaliar excessos marginais e verificar contato com fio dental (em restaurações proximais).</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Remover excessos</h4><p>Preferencialmente com lâminas de bisturi.</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Acabamento e polimento</h4><p>Realizar em <strong>outra sessão</strong>, com pontas diamantadas e taças de borracha apropriadas.</p></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Acompanhamento periódico</h4></div></div>
+    </div>
+  </div>
+
+  <div id="rt2" class="tab-panel">
+    <h2 class="content-h2">Restauração com Cimento de Ionômero de Vidro (CIV)</h2>
+    <p class="body-text">O CIV possui propriedades favoráveis para uso em crianças: adesão química ao esmalte e dentina, expansão térmica similar à estrutura dental, biocompatibilidade, <strong>liberação de flúor</strong> e menor sensibilidade à umidade.</p>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicações</h4><ul><li>Crianças com comportamento não colaborador (restauração temporária)</li><li>Múltiplas lesões abertas — controle de cáries antes do tratamento definitivo (adequação do meio)</li><li>Restauração definitiva na técnica ART</li></ul></div>
+      <div class="info-box"><h4>⭐ Vantagens</h4><ul><li>Liberação de flúor</li><li>Menor sensibilidade à umidade</li><li>Adesão química ao dente</li><li>Biocompatível</li><li>Pode ser manipulado à mão ou em cápsulas</li></ul></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — CIV</h3><span class="badge">12 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Anestesia (se necessário)</h4></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Isolamento</h4><p>Isolar o campo operatório (preferencialmente absoluto).</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Remoção do tecido cariado</h4><p>Com curetas e/ou brocas esféricas em baixa rotação. Seguir o protocolo do fabricante para o CIV escolhido.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Inserir o CIV</h4><p>Preferencialmente com seringas tipo Centrix, ou espátulas apropriadas. Em restaurações ocluso-proximais: usar matriz e cunha adaptadas.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Fotopolimerizar (CIV modificado por resina)</h4></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Aplicar proteção superficial</h4><p>Aplicar verniz, vaselina ou finish gloss sobre a restauração imediatamente.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Remover excessos</h4><p>Com lâmina de bisturi. Evitar pontas diamantadas na fase imediata.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Checar oclusão</h4></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Reaplicar verniz/vaselina</h4></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Polimento em outra sessão</h4></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Acompanhamento periódico</h4></div></div>
+    </div>
+  </div>
+
+  <div id="rt3" class="tab-panel">
+    <h2 class="content-h2">Coroa de Acetato — Restauração Estética Anterior</h2>
+    <p class="body-text">A coroa de acetato é pré-fabricada, usada como molde para restauração direta anterior, devolvendo estética e função para dentes com grande perda de estrutura.</p>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Coroa de Acetato</h3><span class="badge">11 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Escolher a coroa</h4><p>Escolher a coroa específica para o dente a ser restaurado.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Preparar a coroa</h4><p>Fazer um orifício na incisal da coroa de acetato (com sonda exploradora) e fazer ajustes cervicais (com tesoura) se necessário.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Acomodar a resina</h4><p>Acomodar a resina composta na superfície interna da coroa de acetato.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Posicionar a coroa</h4><p>Posicionar a coroa no dente a ser restaurado.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Fotopolimerizar</h4><p>Fotopolimerizar por 40 segundos.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Remover a coroa de acetato</h4></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Remover excessos</h4><p>Com lâmina de bisturi. Evitar pontas diamantadas.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Fotopolimerizar cada superfície</h4><p>Fotopolimerizar cada superfície por mais 20 segundos.</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Checar e ajustar oclusão</h4></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Polimento em outra sessão</h4></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Acompanhamento periódico</h4></div></div>
+    </div>
+  </div>
+
+  <div id="rt4" class="tab-panel">
+    <h2 class="content-h2">Coroa de Aço Convencional</h2>
+    <p class="body-text">As coroas de aço pré-fabricadas são adaptáveis aos dentes e cimentadas. Segundo a AAPD, podem ser usadas em dentes decíduos e permanentes.</p>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicações</h4><ul><li>Lesões extensas e/ou defeitos de desenvolvimento (hipoplasia, hipomineralização)</li><li>Dentes que receberam tratamento pulpar</li><li>Restauração temporária de dentes fraturados</li><li>Alto risco de cárie</li><li>Pacientes sedados ou sob anestesia geral</li></ul></div>
+      <div class="info-box"><h4>🔧 Fórceps para Coroas (preparo)</h4><ul><li>Superfície oclusal: reduzir 1,0–2,0 mm mantendo anatomia</li><li>Superfícies proximais: terminar em zero, 0,5 mm abaixo da margem gengival</li><li>Vestibular e lingual: não é necessário desgaste</li><li>Arredondar todos os ângulos vivos</li></ul></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Coroa de Aço Convencional</h3><span class="badge">11 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Anestesia</h4></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Proteger dentes adjacentes</h4><p>Com tira de aço antes de iniciar o preparo.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Sulcos de orientação</h4><p>Realizar com ponta diamantada 2200.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Reduzir oclusal</h4><p>Reduzir a superfície oclusal em 1,0–2,0 mm, mantendo a anatomia dental; verificar espaço oclusal.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Desgastar contatos proximais</h4><p>Obter espaço suficiente para adaptar a coroa, terminar em zero, 0,5 mm abaixo da margem gengival.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Arredondar ângulos vivos</h4><p>Com ponta diamantada.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Selecionar a coroa</h4><p>Que corresponda à distância mésio-distal do dente e se encaixe instantaneamente no dente preparado.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Provar a coroa</h4><p>Checar a oclusão e ajustar a cervical com tesoura e/ou alicate, se necessário.</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Isolar e cimentar</h4><p>Isolamento relativo. Cimentar a coroa com CIV.</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Remover excessos</h4><p>Imediatamente, com sonda exploradora e fio dental.</p></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Verificação final e acompanhamento</h4></div></div>
+    </div>
+  </div>
+
+  <div id="rt5" class="tab-panel">
+    <h2 class="content-h2">Critérios de Escolha do Material Restaurador</h2>
+    <div class="flowchart">
+      <h4>🔍 Fluxograma de Decisão Clínica</h4>
+      <div class="flow-node">Avaliar: Localização da lesão + Cooperação do paciente + Extensão da cárie + Risco de cárie + Expectativa de permanência do dente</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-split">
+        <div>
+          <div class="flow-node decision">Dente anterior? + Boa cooperação?</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node action">✅ Resina composta (c/ ou s/ coroa de acetato)</div>
+        </div>
+        <div>
+          <div class="flow-node decision">Dente posterior com grande destruição + tratamento pulpar?</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node action">✅ Coroa de aço convencional</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-split">
+        <div>
+          <div class="flow-node decision">Comportamento não colaborador ou múltiplas lesões?</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node action">✅ CIV (restauração temporária ou definitiva ART)</div>
+        </div>
+        <div>
+          <div class="flow-node decision">Molar decíduo com lesão proximal/oclusal + não aceita procedimento convencional?</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node action">✅ Hall Technique</div>
+        </div>
+      </div>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>Material</th><th>Vantagens</th><th>Desvantagens</th><th>Principal Indicação Pediátrica</th></tr></thead><tbody>
+      <tr><td><strong>Resina composta</strong></td><td>Estética, adesivo, versátil</td><td>Técnica-sensível, umidade</td><td>Anteriores e posteriores c/ cooperação</td></tr>
+      <tr><td><strong>CIV</strong></td><td>Libera flúor, menos umidade-sensível, adesão química</td><td>Resistência menor</td><td>Paciente não colaborador, adequação do meio</td></tr>
+      <tr><td><strong>Coroa de aço</strong></td><td>Alta durabilidade, cobre toda coroa</td><td>Estética, preparo necessário</td><td>Após tratamento pulpar, grande destruição</td></tr>
+      <tr><td><strong>Coroa de acetato + resina</strong></td><td>Estética superior</td><td>Trabalhoso</td><td>Anterior com grande perda</td></tr>
+    </tbody></table></div>
+  </div>
+
+  </div>
+</div>
+
+<!-- TERAPIA PULPAR -->
+<div id="section-terapia-pulpar" class="section">
+  <h1 class="section-title">❤️ Terapia Pulpar em Dentes Decíduos</h1>
+  <p class="section-subtitle">O objetivo básico da terapia pulpar é a manutenção da integridade e saúde do dente e seus tecidos de suporte. É desejável manter a vitalidade pulpar.</p>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('pulp-tab', 'pt1', this)">Diagnóstico Pulpar</button>
+    <button class="tab-btn" onclick="showTab('pulp-tab', 'pt2', this)">Proteção Direta</button>
+    <button class="tab-btn" onclick="showTab('pulp-tab', 'pt3', this)">Pulpotomia</button>
+    <button class="tab-btn" onclick="showTab('pulp-tab', 'pt4', this)">Biopulpectomia</button>
+    <button class="tab-btn" onclick="showTab('pulp-tab', 'pt5', this)">Necropulpectomia</button>
+  </div>
+  <div id="pulp-tab">
+
+  <div id="pt1" class="tab-panel active">
+    <h2 class="content-h2">Diagnóstico da Condição Pulpar</h2>
+    <div class="alert alert-info"><div class="alert-icon">ℹ️</div><div class="alert-content"><h4>Testes de sensibilidade pulpar</h4><p>Os testes elétricos e térmicos são úteis para dentes permanentes, mas <strong>NÃO são recomendados para dentes decíduos</strong>. Basear o diagnóstico na anamnese, exame clínico e radiográfico.</p></div></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Dor</th><th>Sinais Físicos</th><th>Sinais Radiográficos</th><th>Diagnóstico</th></tr></thead>
+      <tbody>
+        <tr><td>Provocada por frio e estímulo químico na dentina</td><td>Lesão cariosa em dentina de média profundidade ou restauração insatisfatória</td><td>Área radiolúcida até metade externa da dentina. Periápice e espaço interradicular normais</td><td><strong>Hiperemia pulpar</strong></td></tr>
+        <tr><td>Provocada por frio, estímulo mecânico ou químico. Localizada</td><td>Lesão cariosa em dentina profunda ou restauração insatisfatória</td><td>Lesão cariosa profunda. Periápice e espaço interradicular normais</td><td><strong>Hiperemia pulpar</strong></td></tr>
+        <tr><td>Espontânea, contínua, pulsátil, reflexa</td><td>Lesão cariosa profunda, com ou sem exposição clínica da polpa</td><td>Lesão cariosa profunda ou cárie recorrente sob restauração extensa</td><td><strong>Pulpite aguda</strong></td></tr>
+        <tr><td>Espontânea, ou provocada à palpação e mastigação. Pode estar assintomático</td><td>Lesão cariosa profunda. Presença ou não de edema e fístula</td><td>Possibilidade de rarefação óssea periapical ou na região de furca; ou reabsorção radicular patológica</td><td><strong>Necrose pulpar</strong></td></tr>
+        <tr><td>Provocada à mastigação</td><td>Exposição e hiperplasia pulpares (pólipo)</td><td>Lesão cariosa profunda. Periápice e espaço interradicular normais</td><td><strong>Pulpite crônica hiperplásica</strong></td></tr>
+      </tbody>
+    </table></div>
+    <div class="flowchart"><h4>🔍 Fluxograma de Decisão Terapêutica Pulpar</h4>
+      <div class="flow-node">Avaliação: anamnese + exame físico + radiografia</div><div class="flow-arrow">↓</div>
+      <div class="flow-split">
+        <div><div class="flow-node decision">Polpa vital, sem sinais de infecção?</div><div class="flow-arrow">↓</div><div class="flow-node action">✅ Remoção seletiva de cárie ou Pulpotomia (se exposição)</div></div>
+        <div><div class="flow-node decision">Dor espontânea, fístula, mobilidade, rarefação óssea?</div><div class="flow-arrow">↓</div><div class="flow-node warning-node">⚠️ Pulpite irreversível / Necrose → Pulpectomia ou Exodontia</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pt2" class="tab-panel">
+    <h2 class="content-h2">Proteção Pulpar Direta</h2>
+    <div class="alert alert-warning"><div class="alert-icon">⚠️</div><div class="alert-content"><h4>Uso Cauteloso</h4><p>Normalmente desestimulada em dentes decíduos pelo grande número de insucesso. <strong>Contraindicada nos casos de exposição pulpar por cárie.</strong></p></div></div>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicação Restrita</h4><ul><li>Exposição acidental mínima da polpa após remoção de tecido cariado</li><li>Crianças menores de 4 anos (dentes jovens)</li><li>Sem indícios de reabsorção radicular</li><li>Sem contaminação pela saliva</li></ul></div>
+      <div class="info-box"><h4>🔧 Materiais</h4><ul><li>Pasta à base de hidróxido de cálcio em pó + soro fisiológico</li><li>MTA (Agregado Trióxido Mineral)</li><li>Cobertura posterior: CIV</li></ul></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Proteção Pulpar Direta</h3></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Isolamento absoluto</h4></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Remover tecido cariado</h4></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Lavar cavidade</h4><p>Com soro fisiológico.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Secar com algodão estéril</h4></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Aplicar material biocompatível</h4><p>Aplicar pasta HC/SF ou MTA diretamente sobre o tecido pulpar exposto.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Forrar com CIV</h4></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Restaurar definitivamente</h4></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Acompanhar em 3 meses</h4><p>Com anamnese, exame físico e radiográfico.</p></div></div>
+    </div>
+  </div>
+
+  <div id="pt3" class="tab-panel">
+    <h2 class="content-h2">Pulpotomia em Dentes Decíduos</h2>
+    <p class="body-text">Remoção da polpa coronária, mantendo a polpa radicular vital. Indicada quando há exposição pulpar por trauma ou durante remoção de extensa lesão cariosa.</p>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Critérios de Indicação</h4><ul><li>Exposição pulpar em dentes decíduos por traumatismo ou remoção de cárie</li><li>Exposição mecânica acidental com tecido pulpar saudável ou pulpite reversível</li><li>Sangramento vermelho-vivo e controlável</li><li>Consistência firme da polpa coronária ao corte</li><li>Sem dor espontânea, fístula, edema, mobilidade ou sinais radiográficos de alterações pulpares</li></ul></div>
+      <div class="info-box"><h4>🚫 Contraindicações</h4><ul><li>Ausência de hemostasia após o corte da polpa coronária</li><li>Sangramento escuro ou incontrolável</li><li>Sinais de pulpite irreversível ou necrose</li></ul></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Pulpotomia</h3><span class="badge">15 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Radiografar</h4><p>Para auxiliar o diagnóstico.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Organizar a mesa clínica</h4></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Anestesia tópica e local</h4></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Isolamento absoluto</h4></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Remover tecido cariado</h4><p>Com curetas de dentina e broca esférica em baixa rotação.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Abertura coronária</h4><ul><li>Remoção do teto da câmara: ponta diamantada esférica de grande diâmetro em alta rotação</li><li>Desgaste compensatório: broca Endo-Z ou ponta diamantada 3082</li></ul></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Remoção da polpa coronária</h4><p>Com cureta de dentina estéril, grande e afiada.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Irrigar abundantemente</h4><p>Com soro fisiológico e aspirar.</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Hemostasia</h4><p>Secar com bolinha de algodão estéril e aguardar hemostasia imediata.</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Preencher a câmara pulpar</h4><p>Com pasta à base de HC + SF ou MTA.</p></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Acomodar a pasta</h4><p>Com bolinha de algodão estéril.</p></div></div>
+      <div class="step"><div class="step-num">12</div><div class="step-content"><h4>Limpar paredes circundantes</h4><p>Com bolinha de algodão estéril.</p></div></div>
+      <div class="step"><div class="step-num">13</div><div class="step-content"><h4>Forrar com CIV</h4></div></div>
+      <div class="step"><div class="step-num">14</div><div class="step-content"><h4>Restaurar definitivamente</h4></div></div>
+      <div class="step"><div class="step-num">15</div><div class="step-content"><h4>Acompanhar após 3 meses</h4><p>Com anamnese, exame físico e radiográfico.</p></div></div>
+    </div>
+  </div>
+
+  <div id="pt4" class="tab-panel">
+    <h2 class="content-h2">Biopulpectomia — Sessão Única</h2>
+    <p class="body-text">Indicada para dentes com <strong>pulpite irreversível</strong>. Remoção completa da polpa vital dos canais radiculares e obturação com material reabsorvível.</p>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicações</h4><ul><li>Pulpite irreversível</li><li>Sangramento vermelho escuro</li><li>Sangramento com impossibilidade de hemostasia</li><li>Tecido pulpar sem consistência ao corte</li></ul></div>
+      <div class="info-box"><h4>🔧 Material de Obturação</h4><ul><li>Pasta: HC + óxido de zinco (1:1) + propilenoglicol</li><li>Condensa: calcadores</li><li>Pequena camada de guta-percha em bastão na entrada dos canais</li></ul></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Passo a Passo — Biopulpectomia (Sessão Única)</h3><span class="badge">22 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Radiografar e medir</h4><p>Verificar o comprimento do dente (CD) e determinar o comprimento de trabalho: <strong>CT = CD – 1 mm</strong></p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Organizar mesa clínica</h4></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Anestesia</h4><p>Tópica e local.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Isolamento absoluto</h4></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Remover tecido cariado</h4></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Abertura coronária</h4><p>Remoção do teto da câmara + desgaste compensatório.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Remover polpa coronária</h4><p>Com curetas de dentina afiadas.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Irrigar com Milton (NaOCl 1%)</h4></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Explorar canais radiculares</h4><p>Com sonda exploradora.</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Extirpar polpa radicular</h4><p>Com lima endodôntica tipo Kerr.</p></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Instrumentar canais</h4><ul><li>Molares: limas 1ª série até n° 35–40</li><li>Incisivos: limas 2ª série (compatível com amplitude do canal)</li></ul></div></div>
+      <div class="step"><div class="step-num">12</div><div class="step-content"><h4>Irrigar entre limas</h4><p>Com solução de Milton (aspirar entre cada lima).</p></div></div>
+      <div class="step"><div class="step-num">13</div><div class="step-content"><h4>EDTA por 3 min</h4><p>Limpar canais com solução de EDTA sob agitação.</p></div></div>
+      <div class="step"><div class="step-num">14</div><div class="step-content"><h4>Irrigar com soro fisiológico</h4></div></div>
+      <div class="step"><div class="step-num">15</div><div class="step-content"><h4>Secar com pontas de papel</h4><p>Espessura da última lima no CT.</p></div></div>
+      <div class="step"><div class="step-num">16</div><div class="step-content"><h4>Obturar canais</h4><p>Pasta HC + ZnO (1:1) + propilenoglicol. Introduzir com limas estéreis (molares: lima 15 ou 20) ou seringa Centrix (incisivos/caninos). Condensar levemente.</p></div></div>
+      <div class="step"><div class="step-num">17</div><div class="step-content"><h4>Guta-percha em bastão</h4><p>Colocar pequena camada na entrada dos canais.</p></div></div>
+      <div class="step"><div class="step-num">18</div><div class="step-content"><h4>Preencher câmara coronária com CIV</h4></div></div>
+      <div class="step"><div class="step-num">19</div><div class="step-content"><h4>Radiografia final</h4></div></div>
+      <div class="step"><div class="step-num">20</div><div class="step-content"><h4>Restaurar definitivamente</h4><p>Em outra sessão.</p></div></div>
+      <div class="step"><div class="step-num">21</div><div class="step-content"><h4>Acompanhar após 3, 6 e 12 meses</h4><p>Com anamnese, exame físico e radiográfico.</p></div></div>
+    </div>
+  </div>
+
+  <div id="pt5" class="tab-panel">
+    <h2 class="content-h2">Necropulpectomia — Duas Sessões</h2>
+    <p class="body-text">Indicada para dentes com <strong>necrose pulpar</strong>. Realizada em 2 sessões para controle da infecção antes da obturação.</p>
+    <div class="info-grid">
+      <div class="info-box"><h4>📋 Necrose Pulpar: Classificação</h4><ul><li><strong>Necro I:</strong> sem reabsorções ósseas periapicais ou interradiculares</li><li><strong>Necro II:</strong> com reabsorções ósseas periapicais ou interradiculares</li></ul></div>
+      <div class="info-box"><h4>⚠️ Considerar Exodontia quando</h4><ul><li>Abcessos volumosos</li><li>Saúde geral debilitada</li><li>Comportamento não colaborador</li><li>Mais de 1/3 da raiz reabsorvida</li></ul></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Primeira Sessão — Necropulpectomia</h3></div>
+      <div class="step"><div class="step-num">1-5</div><div class="step-content"><h4>Radiografia → medição CT → anestesia → isolamento → remoção de cárie</h4><p>Igual à biopulpectomia.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Abertura coronária</h4></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Explorar canais</h4></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Irrigar abundantemente com Milton</h4></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Desinfecção progressiva</h4><p>50% CT → irrigação/aspiração → 100% CT → irrigação/aspiração.</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Instrumentar + EDTA + Soro</h4></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Curativo de demora</h4><p>Preencher canal com pasta à base de HC + SF. Guta-percha na entrada dos canais.</p></div></div>
+      <div class="step"><div class="step-num">12</div><div class="step-content"><h4>Restauração provisória com CIV</h4><p>Aguardar 15–30 dias antes da segunda sessão.</p></div></div>
+    </div>
+    <div class="steps-container" style="margin-top:16px;">
+      <div class="steps-header"><h3>Segunda Sessão — Necropulpectomia</h3></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Anestesia e isolamento absoluto</h4></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Remover curativo intracanal</h4><p>Com a última lima utilizada. Promover nova instrumentação.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Irrigar e secar</h4></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Obturar definitivamente</h4><p>Pasta HC + ZnO (1:1) + propilenoglicol. Guta-percha na entrada dos canais.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Preencher câmara + restaurar + radiografia final</h4></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Acompanhar após 3, 6 e 12 meses</h4></div></div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- CIRURGIA -->
+<div id="section-cirurgia" class="section">
+  <h1 class="section-title">✂️ Cirurgia Bucal em Odontopediatria</h1>
+  <p class="section-subtitle">O preparo psicológico da criança e dos pais diminui a ansiedade e o medo e favorece uma cirurgia sem intercorrências. O controle da dor é fundamental para o sucesso do ato cirúrgico.</p>
+
+  <div class="alert alert-info"><div class="alert-icon">📋</div><div class="alert-content"><h4>Analgesia Preemptiva</h4><p>Administrar analgésico/anti-inflamatório <strong>1 hora antes do procedimento</strong> (analgesia preemptiva) para exodontias de decíduos e permanentes e outras cirurgias orais.</p></div></div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('cir-tab', 'ct-exo', this)">Exodontia Decíduos</button>
+    <button class="tab-btn" onclick="showTab('cir-tab', 'ct-ulec', this)">Ulectomia</button>
+    <button class="tab-btn" onclick="showTab('cir-tab', 'ct-fren', this)">Frenectomias</button>
+    <button class="tab-btn" onclick="showTab('cir-tab', 'ct-pos', this)">Pós-Operatório</button>
+  </div>
+  <div id="cir-tab">
+
+  <div id="ct-exo" class="tab-panel active">
+    <h2 class="content-h2">Exodontia de Dentes Decíduos</h2>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicações Principais</h4><ul>
+        <li>Lesão de cárie comprometendo a região de furca</li>
+        <li>Lesão óssea periapical persistente após tratamento endodôntico</li>
+        <li>Alveólise</li>
+        <li>Raízes fraturadas no terço cervical abaixo da crista alveolar</li>
+        <li>Anquilose dentária</li>
+        <li>Destruição coronária extensa impossibilitando restauração</li>
+        <li>Reabsorções radiculares patológicas (menos de 1/3 de raiz)</li>
+        <li>Retenção prolongada (sucessor com mais de 2/3 de raiz formada)</li>
+        <li>Indicação ortodôntica</li>
+      </ul></div>
+      <div class="info-box"><h4>🔧 Fórceps Específicos Pediátricos</h4><ul>
+        <li>Molares superiores: n° 65</li>
+        <li>Molares inferiores: n° 68 ou 69</li>
+        <li>Dentes anteriores: n° 01</li>
+      </ul>
+      <h4 style="margin-top:12px;">⚙️ Movimentos por Tipo</h4>
+      <ul>
+        <li>Dentes anteriores (uniradiculares): movimentos de <strong>rotação</strong></li>
+        <li>Molares: movimentos <strong>vestíbulo/linguais ou palatais</strong></li>
+      </ul></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Técnica Cirúrgica — Exodontia de Decíduo</h3><span class="badge">11 Passos</span></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Radiografia periapical pré-operatória</h4></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Antissepsia bucal</h4><p>Bochecho com gluconato de clorexidina 0,12%.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Anestesia</h4><p>Tópica e, depois, pterigomandibular e/ou infiltrativa conforme a região.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Sindesmotomia</h4><p>Rompimento das fibras do ligamento periodontal com sindesmótomo, espátula Hollenback ou descolador de Free.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Luxação com alavancas</h4></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Aplicar fórceps pediátrico</h4><p>Compatível ao dente (molares: movimentação vestíbulo-lingual ampla).</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Remover o dente</h4></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Curetagem do alvéolo</h4><p>Leve curetagem para remoção do tecido de granulação.</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Irrigar o alvéolo</h4><p>Com soro fisiológico.</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Hemostasia com gaze</h4></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Sutura (se indicada)</h4><p>A sutura após exodontia de dente decíduo se faz necessária sempre que houver alvéolo (dente com mais de 1/3 de raiz).</p></div></div>
+    </div>
+    <div class="tip-box"><strong>💡 Mandíbula:</strong> Ao extrair molares inferiores, <strong>apoiar a mandíbula com a mão</strong> para evitar injúrias na ATM.</div>
+    <div class="alert alert-warning"><div class="alert-icon">📏</div><div class="alert-content"><h4>Verificar necessidade de mantenedor de espaço</h4><p>Sempre avaliar se a extração precoce de dente decíduo indica instalação de mantenedor de espaço para preservar o perímetro do arco.</p></div></div>
+  </div>
+
+  <div id="ct-ulec" class="tab-panel">
+    <h2 class="content-h2">Ulectomia</h2>
+    <p class="body-text">Cirurgia para remoção do capuz mucoso (fibrosado) que recobre dentes não irrompidos.</p>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicações</h4><ul>
+        <li>Fibrose da mucosa gengival (sem ausência de supranumerário, odontoma ou dilaceração)</li>
+        <li>Dente permanente não erupcionado, palpável, com rizogênese avançada (≥ 2/3 de raiz formada)</li>
+        <li>Cisto de erupção associado à dor e irritabilidade</li>
+      </ul></div>
+      <div class="info-box"><h4>🔧 Passos Clínicos</h4><ul>
+        <li>Radiografia periapical</li>
+        <li>Anestesia tópica e infiltrativa</li>
+        <li>Incisão circunferencial ou elíptica expondo toda a borda incisal ou superfície oclusal</li>
+        <li>Curetagem e limpeza da ferida</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div id="ct-fren" class="tab-panel">
+    <h2 class="content-h2">Frenectomia Lingual</h2>
+    <div class="info-grid">
+      <div class="info-box"><h4>✅ Indicações</h4><ul>
+        <li>Freio lingual curto ou inserido próximo ao ápice da língua</li>
+        <li>Problemas de fonação e/ou deglutição</li>
+        <li>Língua bífida na sua extremidade quando forçada</li>
+        <li>Interferência no crescimento mandibular</li>
+      </ul></div>
+      <div class="info-box"><h4>⚠️ Observação Neonatal</h4><p style="font-size:13.5px;">A <strong>frenotomia</strong> (apenas incisão do freio) é realizada em recém-nascidos quando o freio lingual for curto e estiver comprometendo a amamentação.</p></div>
+    </div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Técnica — Frenectomia Lingual</h3></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Antissepsia bucal</h4></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Anestesia tópica + infiltrativa bilateral na região do freio lingual</h4></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Tracionar e imobilizar a língua</h4><p>Com tentacânula ou fio de sutura na ponta da língua.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Incisão do freio lingual</h4><p>Com tesoura ou lâmina de bisturi n°15, o mais próximo possível da base da língua.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Divulsão das fibras laterais</h4><p>Com lâmina de bisturi ou tesoura.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Sutura simples</h4><p>Com fio reabsorvível 3.0, se possível. Cuidado para não lesar as carúnculas sublinguais.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Encaminhamento</h4><p>Para fonoaudiologia (área de motricidade oral) para terapia complementar.</p></div></div>
+    </div>
+
+    <hr class="divider">
+    <h2 class="content-h2">Frenectomia Labial</h2>
+    <div class="alert alert-info"><div class="alert-icon">🕐</div><div class="alert-content"><h4>Momento Ideal</h4><p>Geralmente realizada <strong>após erupção de incisivos laterais permanentes</strong> e <strong>antes da erupção de caninos permanentes</strong>. Seguir o princípio da oportunidade cirúrgica.</p></div></div>
+    <div class="steps-container">
+      <div class="steps-header"><h3>Técnica — Frenectomia Labial</h3></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Antissepsia bucal</h4></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Anestesia</h4><p>Tópica e infiltrativa bilateral no fundo de saco vestibular próximo ao freio, transpapilar e na região da papila palatina. <strong>Não injetar quantidade exagerada — pode mascarar o freio.</strong></p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Tracionar o freio</h4></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Incisão do freio</h4><p>Rente ao rebordo com tesoura ou lâmina de bisturi n°15, até o limite entre a gengiva inserida e a mucosa alveolar.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Remover inserção no periósteo</h4><p>Em fragmento triangular com incisões convergindo para a linha mediana até o periósteo, removendo tecido fibroso interincisivos até a papila palatina.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Manobra com gaze "vai e vem"</h4><p>Interincisivos para remover tecido fibroso na região do rebordo.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Sutura</h4><p>Simples com fio de nylon 5.0 ou 6.0 aproximando a mucosa labial.</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Cimento cirúrgico</h4><p>Pequena quantidade na região da ferida cirúrgica interincisivos.</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Prescrever analgésico</h4><p>E entregar orientações pós-cirúrgicas.</p></div></div>
+    </div>
+  </div>
+
+  <div id="ct-pos" class="tab-panel">
+    <h2 class="content-h2">Orientações Pós-Operatórias — Cirurgia Oral Menor</h2>
+    <div class="steps-container">
+      <div class="steps-header"><h3>📋 Orientações nas Primeiras 24 Horas</h3></div>
+      <div class="step"><div class="step-num">🚫</div><div class="step-content"><h4>Não colocar a mão no local da cirurgia</h4></div></div>
+      <div class="step"><div class="step-num">🍲</div><div class="step-content"><h4>Alimentação</h4><p>Ingerir alimentos na temperatura natural ou gelada. Evitar alimentos quentes.</p></div></div>
+      <div class="step"><div class="step-num">🏃</div><div class="step-content"><h4>Não realizar atividade física</h4></div></div>
+      <div class="step"><div class="step-num">☀️</div><div class="step-content"><h4>Não ficar exposto ao sol</h4></div></div>
+      <div class="step"><div class="step-num">🪥</div><div class="step-content"><h4>Higiene bucal</h4><p>Realizar normalmente, evitando bochechos.</p></div></div>
+      <div class="step"><div class="step-num">💊</div><div class="step-content"><h4>Medicamentos</h4><p>Utilizar conforme prescrição.</p></div></div>
+      <div class="step"><div class="step-num">🔙</div><div class="step-content"><h4>Retorno</h4><p>Retornar após uma semana para remoção de sutura (se houver).</p></div></div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- TRAUMATISMO -->
+<div id="section-traumatismo" class="section">
+  <h1 class="section-title">⚡ Traumatismo na Dentição Decídua</h1>
+  <p class="section-subtitle">O traumatismo dentário é considerado urgência odontológica. O profissional deve avaliar o paciente, preferencialmente até 2 horas após o acidente.</p>
+
+  <div class="steps-container">
+    <div class="steps-header"><h3>Atendimento Imediato ao Traumatismo</h3><span class="badge">12 Passos</span></div>
+    <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Acalmar criança e familiares</h4></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Limpar a área</h4><p>Com soro fisiológico ou solução de clorexidina 0,12%.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Controlar sangramento</h4><p>Com gaze, quando houver lesão em tecido mole.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Anamnese dirigida</h4><p>Como, quando, onde ocorreu o traumatismo.</p></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Exame físico extra e intrabucal</h4><p>Direcionado ao traumatismo.</p></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Radiografar</h4><ul><li>Periapical: pelo menos duas angulagens</li><li>Oclusal: para dentes decíduos anteriores</li><li>Lateral de Fazzi: intrusão unitária</li><li>Panorâmica: lesões ósseas extensas</li></ul></div></div>
+    <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Atendimento imediato</h4><p>Sutura, alívio da dor, reposição dentária e contenção conforme o tipo de traumatismo.</p></div></div>
+    <div class="step"><div class="step-num">8</div><div class="step-content"><h4>Fotografar a região</h4><p>Após consentimento dos responsáveis.</p></div></div>
+    <div class="step"><div class="step-num">9</div><div class="step-content"><h4>Instruções ao paciente e familiares</h4><ul><li>Escovação dentária suave na região</li><li>Clorexidina 0,12% (sem álcool) 2x/dia por 7 dias</li><li>Dieta pastosa por 7–10 dias</li><li>Evitar chupeta e mamadeira</li></ul></div></div>
+    <div class="step"><div class="step-num">10</div><div class="step-content"><h4>Avaliar necessidade de terapia antitetânica</h4></div></div>
+    <div class="step"><div class="step-num">11</div><div class="step-content"><h4>Alertar sobre sequelas para o dente permanente</h4></div></div>
+    <div class="step"><div class="step-num">12</div><div class="step-content"><h4>Acompanhamento rigoroso</h4><p>Físico e radiográfico conforme o tipo de traumatismo.</p></div></div>
+  </div>
+
+  <h2 class="content-h2">Condutas por Tipo de Traumatismo</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tipo</th><th>Conduta Principal</th><th>Contenção</th><th>Acompanhamento</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Trinca de esmalte</strong></td><td>Apenas acompanhamento. Prognóstico favorável.</td><td>Não</td><td>Consultas rotineiras</td></tr>
+      <tr><td><strong>Fratura coronária não complexa (esmalte)</strong></td><td>Alisamento do esmalte + flúor (sem comprometimento de oclusão/estética) | Resina composta (com comprometimento)</td><td>Não</td><td>6-8 sem. e 12 meses</td></tr>
+      <tr><td><strong>Fratura coronária não complexa (esmalte+dentina)</strong></td><td>Resina composta; pode restaurar provisoriamente com CIV</td><td>Não</td><td>6-8 sem. e 12 meses</td></tr>
+      <tr><td><strong>Fratura coronária complexa (exposição pulpar)</strong></td><td>Raiz incompleta: pulpotomia + resina; Raiz completa: pulpectomia + resina</td><td>Não</td><td>7 dias + 6-8 sem. + 6 e 12 meses</td></tr>
+      <tr><td><strong>Fratura radicular (terço médio)</strong></td><td>Reposição + contenção semirrígida</td><td>Semirrígida 4 sem.</td><td>1 sem. + 4-6 sem. + 3, 6, 12 meses</td></tr>
+      <tr><td><strong>Concussão</strong></td><td>Acompanhamento; alívio oclusal se dor ao morder; analgésico + dieta pastosa</td><td>Não</td><td>8 sem. + rotina</td></tr>
+      <tr><td><strong>Subluxação</strong></td><td>Leve/moderada: acompanhamento; Severa: contenção semirrígida 2 sem.</td><td>Semirrígida 2 sem.</td><td>2-3 sem. + 8 sem. + 3, 6, 12 meses</td></tr>
+      <tr><td><strong>Luxação lateral (sem interf.)</strong></td><td>Aguardar reposição espontânea</td><td>—</td><td>2-3 sem. + 6-8 sem.</td></tr>
+      <tr><td><strong>Luxação lateral (com interf.)</strong></td><td>Reposição bidigital + contenção</td><td>Semirrígida 2-3 sem.</td><td>2-3 sem. + 6-8 sem.</td></tr>
+      <tr><td><strong>Luxação extrusiva leve</strong></td><td>Desgaste incisal apenas em esmalte</td><td>—</td><td>2 sem. + 6-8 sem.</td></tr>
+      <tr><td><strong>Luxação extrusiva severa</strong></td><td>Extração</td><td>—</td><td>—</td></tr>
+      <tr><td><strong>Intrusão (ápice p/ vestibular, ≤ metade)</strong></td><td>Aguardar reerupção espontânea (máx. 6 meses)</td><td>—</td><td>1 sem. + 4 sem. + 8 sem. + 6 e 12 meses</td></tr>
+      <tr><td><strong>Intrusão (ápice p/ palatino ou total)</strong></td><td>Extração</td><td>—</td><td>—</td></tr>
+      <tr><td><strong>Avulsão</strong></td><td>NÃO reimplantar dentes decíduos</td><td>—</td><td>7 dias + 30 dias + rotina</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="alert alert-danger"><div class="alert-icon">🚫</div><div class="alert-content"><h4>Avulsão de Dente Decíduo</h4><p>A literatura não apresenta evidências conclusivas sobre as indicações e riscos do reimplante de dente decíduo. <strong>Recomenda-se NÃO reimplantar.</strong></p></div></div>
+</div>
+
+<!-- MANEJO -->
+<div id="section-manejo" class="section">
+  <h1 class="section-title">👶 Manejo Comportamental em Odontopediatria</h1>
+  <p class="section-subtitle">A adaptação do comportamento da criança ao contexto odontológico é a base de qualquer atendimento bem-sucedido. Técnicas baseadas em evidências e comunicação eficaz são fundamentais.</p>
+
+  <div class="info-grid">
+    <div class="info-box"><h4>🎯 Objetivos do Manejo</h4><ul>
+      <li>Estabelecer comunicação adequada</li>
+      <li>Realizar atenção odontológica de qualidade</li>
+      <li>Promover atitudes positivas para a saúde bucal</li>
+      <li>Desenvolver confiança profissional-família</li>
+      <li>Prevenir ou reduzir ansiedade, medo e dor</li>
+    </ul></div>
+    <div class="info-box"><h4>👥 Papel da Equipe</h4><ul>
+      <li>Ouvir a criança e a família</li>
+      <li>Investir tempo para explicar os procedimentos</li>
+      <li>Ser paciente</li>
+      <li>Permitir que os pais entrem no consultório</li>
+      <li>Jamais ameaçar a criança</li>
+    </ul></div>
+  </div>
+
+  <h2 class="content-h2">Estágios de Desenvolvimento de Piaget — Aplicação Clínica</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Estágio</th><th>Idade</th><th>Características</th><th>Abordagem Clínica</th></tr></thead>
+    <tbody>
+      <tr><td><strong>I — Sensório motor</strong></td><td>0–2 anos</td><td>Ações antes do pensamento; exploração manual e visual</td><td>Atendimento em colo dos pais; evitar contenção verbal</td></tr>
+      <tr><td><strong>II — Pré-operacional</strong></td><td>2–6/7 anos</td><td>Idade dos "porquês"; egocentrismo; confunde real e fantasia</td><td>Linguagem simples e concreta; Tell-Show-Do; distração</td></tr>
+      <tr><td><strong>III — Operações concretas</strong></td><td>6/7–11/12 anos</td><td>Pensamento lógico com objetos concretos; aprende regras</td><td>Explicar o procedimento com lógica; negociação</td></tr>
+      <tr><td><strong>IV — Operações formais</strong></td><td>11/12+ anos</td><td>Abstração total; raciocínio lógico avançado</td><td>Abordagem adulta; respeito à autonomia</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="content-h2">Escalas de Avaliação</h2>
+  <div class="info-grid">
+    <div class="info-box">
+      <h4>📊 Escala de Frankl — Comportamento Dental</h4>
+      <div style="margin-top:8px;">
+        <div style="margin-bottom:10px;padding:8px 12px;border-radius:6px;background:#fef2f2;border-left:3px solid #ef4444;">
+          <strong style="color:#991b1b;">Escore 1 — Definitivamente negativo:</strong>
+          <p style="font-size:13px;margin-top:4px;color:#7f1d1d;">Recusa de tratamento; chora com força, com medo ou qualquer outra evidência de extremo negativismo. Comportamento não colaborador constante.</p>
+        </div>
+        <div style="margin-bottom:10px;padding:8px 12px;border-radius:6px;background:#fff7ed;border-left:3px solid #f97316;">
+          <strong style="color:#9a3412;">Escore 2 — Negativo:</strong>
+          <p style="font-size:13px;margin-top:4px;color:#7c2d12;">Reluta em aceitar tratamento; não coopera; atitude negativa, mas não pronunciada. Necessidade de contenção.</p>
+        </div>
+        <div style="margin-bottom:10px;padding:8px 12px;border-radius:6px;background:#f0fdf4;border-left:3px solid #22c55e;">
+          <strong style="color:#166534;">Escore 3 — Positivo:</strong>
+          <p style="font-size:13px;margin-top:4px;color:#14532d;">Aceita o tratamento; vontade de colaborar com certa cautela; segue as instruções.</p>
+        </div>
+        <div style="margin-bottom:10px;padding:8px 12px;border-radius:6px;background:#eff6ff;border-left:3px solid #3b82f6;">
+          <strong style="color:#1e40af;">Escore 4 — Definitivamente positivo:</strong>
+          <p style="font-size:13px;margin-top:4px;color:#1e3a8a;">Boa comunicação; interesse nos procedimentos; ri e aprecia a situação.</p>
+        </div>
+      </div>
+    </div>
+    <div class="info-box">
+      <h4>😊 Facial Image Scale (FIS) — Ansiedade</h4>
+      <p style="font-size:13.5px;margin-bottom:8px;">Para crianças de 3 anos ou mais. Perguntar à criança como ela está se sentindo e pedir que aponte o rosto com que se identifica.</p>
+      <ul>
+        <li>Escore 1: menor ansiedade (rosto feliz)</li>
+        <li>Escore 5: maior ansiedade (rosto triste/com medo)</li>
+      </ul>
+      <h4 style="margin-top:16px;">📊 Escala FPS-R — Dor</h4>
+      <p style="font-size:13.5px;">Para crianças maiores de 4 anos. Aplicar antes do procedimento. Escores de 0 a 10 (0 = sem dor; 10 = muita dor).</p>
+    </div>
+  </div>
+
+  <h2 class="content-h2">Técnicas de Manejo Comportamental</h2>
+  <div class="card-grid">
+    <div class="card" style="cursor:default;">
+      <div class="card-icon">📢</div>
+      <h3>Tell-Show-Do</h3>
+      <p>Explicar verbalmente (Tell), mostrar o procedimento (Show), realizar o procedimento (Do). A técnica mais fundamentada para reduzir medo e ansiedade.</p>
+    </div>
+    <div class="card" style="cursor:default;">
+      <div class="card-icon">🔊</div>
+      <h3>Voz de Controle</h3>
+      <p>Mudança súbita no volume e tom de voz para obter atenção e cooperação, sem gritar. Usada para interromper comportamento não colaborador.</p>
+    </div>
+    <div class="card" style="cursor:default;">
+      <div class="card-icon">🎯</div>
+      <h3>Reforço Positivo</h3>
+      <p>Elogiar e recompensar comportamentos cooperativos. Feedback verbal ("você está se saindo muito bem!") durante e após o procedimento.</p>
+    </div>
+    <div class="card" style="cursor:default;">
+      <div class="card-icon">🎮</div>
+      <h3>Distração</h3>
+      <p>Uso de televisão, música, histórias ou conversa durante procedimentos. Grande aliada especialmente durante a anestesia local.</p>
+    </div>
+    <div class="card" style="cursor:default;">
+      <div class="card-icon">🔄</div>
+      <h3>Dessensibilização</h3>
+      <p>Exposição gradual e progressiva a situações relacionadas ao medo odontológico, para diminuição progressiva da ansiedade.</p>
+    </div>
+    <div class="card" style="cursor:default;">
+      <div class="card-icon">🦁</div>
+      <h3>Abordagem de Conto</h3>
+      <p>Usar narrativas e metáforas adequadas à idade ("vamos colocar o dente para dormir", "vamos usar um vento mágico"). Muito eficaz em pré-escolares.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FARMACOLOGIA -->
+<div id="section-farmaco" class="section">
+  <h1 class="section-title">💊 Farmacologia Odontopediátrica</h1>
+  <p class="section-subtitle">Crianças não são adultos em miniatura. Suas particularidades devem fundamentar o uso de medicamentos. A dose pediátrica baseia-se no peso da criança; geralmente, criança com 30 kg ou mais recebe a dose do adulto.</p>
+
+  <div class="alert alert-warning"><div class="alert-icon">⚠️</div><div class="alert-content"><h4>Regras Gerais</h4><ul><li>Ácido acetilsalicílico (AAS): <strong>NÃO usar em crianças</strong> (risco de Síndrome de Reye)</li><li>Nimesulida: apenas em crianças com <strong>≥ 12 anos</strong></li><li>Administração preferencialmente via oral</li></ul></div></div>
+
+  <h2 class="content-h2">Analgésicos e Anti-inflamatórios</h2>
+  <div class="drug-card">
+    <div class="drug-card-header"><h4>Paracetamol (Tylenol®)</h4><span class="drug-type-badge">Analgésico</span></div>
+    <div class="drug-card-body">
+      <div class="drug-field"><label>Apresentação</label><span>Gotas 200 mg/mL</span></div>
+      <div class="drug-field"><label>Dose</label><span>10–15 mg/kg/dose de 4/4 ou 6/6h</span></div>
+      <div class="drug-field"><label>Regra prática</label><span>1 a 1,5 gota/kg/dose</span></div>
+    </div>
+  </div>
+  <div class="drug-card">
+    <div class="drug-card-header"><h4>Dipirona (Novalgina®)</h4><span class="drug-type-badge">Analgésico</span></div>
+    <div class="drug-card-body">
+      <div class="drug-field"><label>Apresentação</label><span>Gotas 500 mg/mL</span></div>
+      <div class="drug-field"><label>Dose</label><span>6–15 mg/kg/dose de 6/6h</span></div>
+      <div class="drug-field"><label>Regra prática</label><span>1 gota/kg/dose (arredondar para baixo)</span></div>
+    </div>
+  </div>
+  <div class="drug-card">
+    <div class="drug-card-header"><h4>Ibuprofeno (Alivium®, Maxifen®)</h4><span class="drug-type-badge">Anti-inflamatório — 1ª Escolha</span></div>
+    <div class="drug-card-body">
+      <div class="drug-field"><label>Apresentação</label><span>Gotas 50–100 mg/mL</span></div>
+      <div class="drug-field"><label>Dose</label><span>5–10 mg/kg/dose de 6/6h</span></div>
+      <div class="drug-field"><label>Regra prática</label><span>1 gota/kg/dose</span></div>
+    </div>
+  </div>
+
+  <h2 class="content-h2">Antibióticos</h2>
+
+  <div class="alert alert-danger"><div class="alert-icon">🚨</div><div class="alert-content"><h4>Indicação de Antibiótico em Odontopediatria</h4><p>Infecção de origem bucal causando <strong>comprometimento sistêmico</strong>: edema extra-oral agudo, mal-estar geral, febre (temperatura axilar &gt; 37,5°C), limitação de abertura bucal. Na maioria das vezes, realiza-se o procedimento local imediatamente, seguido pela prescrição do antibiótico quando indicado.</p></div></div>
+
+  <div class="drug-card">
+    <div class="drug-card-header"><h4>Amoxicilina (Amoxil®)</h4><span class="drug-type-badge">Antibiótico — 1ª Escolha</span></div>
+    <div class="drug-card-body">
+      <div class="drug-field"><label>Apresentação</label><span>Solução 250 mg/5 mL</span></div>
+      <div class="drug-field"><label>Dose</label><span>20–50 mg/kg/dia dividido de 8/8h</span></div>
+      <div class="drug-field"><label>Regra prática</label><span>1 mL/kg/dia ou peso÷3 = mL a cada 8h</span></div>
+      <div class="drug-field"><label>Duração</label><span>5–10 dias (mín. 3 dias após melhora)</span></div>
+    </div>
+  </div>
+  <div class="drug-card">
+    <div class="drug-card-header"><h4>Cefalexina (Keflex®)</h4><span class="drug-type-badge">Antibiótico — Trauma c/ contaminação de pele</span></div>
+    <div class="drug-card-body">
+      <div class="drug-field"><label>Apresentação</label><span>Solução 250 mg/5 mL</span></div>
+      <div class="drug-field"><label>Dose</label><span>25–50 mg/kg/dia dividido em 4 doses</span></div>
+      <div class="drug-field"><label>Regra prática</label><span>1 mL/kg/dia de 6/6h</span></div>
+    </div>
+  </div>
+  <div class="drug-card">
+    <div class="drug-card-header"><h4>Eritromicina (Ilosone®)</h4><span class="drug-type-badge">Antibiótico — Alérgico à Penicilina</span></div>
+    <div class="drug-card-body">
+      <div class="drug-field"><label>Apresentação</label><span>Solução 250 mg/5 mL</span></div>
+      <div class="drug-field"><label>Dose</label><span>30–50 mg/kg/dia dividido em 4 doses</span></div>
+      <div class="drug-field"><label>Regra prática</label><span>1 mL/kg/dia ou peso÷4 = mL a cada 6h</span></div>
+    </div>
+  </div>
+
+  <h2 class="content-h2">Profilaxia Antibiótica</h2>
+  <div class="info-grid">
+    <div class="info-box"><h4>✅ Indicações do Paciente</h4><ul>
+      <li>Prótese valvar ou material protético cardíaco</li>
+      <li>História de endocardite bacteriana</li>
+      <li>Cardiopatia congênita cianótica não corrigida</li>
+      <li>CC corrigida com material protético nos últimos 6 meses</li>
+      <li>Transplante cardíaco com valvulopatia residual</li>
+      <li>Comprometimento do sistema imunológico</li>
+    </ul></div>
+    <div class="info-box"><h4>🔧 Protocolo</h4><ul>
+      <li><strong>1ª escolha:</strong> Amoxicilina 50 mg/kg (máx. 2g), VO, 1h antes</li>
+      <li><strong>IM/EV:</strong> Ampicilina ou Ceftriaxona 50 mg/kg, 30 min antes</li>
+      <li><strong>Alérgico à penicilina:</strong> Clindamicina 20 mg/kg, Cefalexina 50 mg/kg, Azitromicina 15 mg/kg, ou Claritromicina 15 mg/kg</li>
+    </ul></div>
+  </div>
+
+  <h2 class="content-h2">Medicamentos para Condições Específicas</h2>
+  <div class="info-grid">
+    <div class="info-box"><h4>🍄 Candidíase Oral</h4><ul>
+      <li>Nistatina suspensão 100.000 UI/mL: ½ a 1 conta-gotas em cada canto da boca, 4x/dia</li>
+      <li>Miconazol gel oral 20 mg/g: aplicar nas lesões 4x/dia</li>
+      <li>Fluconazol suspensão 50 mg/5 mL: 3 mg/kg, 1x/dia por 7 dias</li>
+    </ul></div>
+    <div class="info-box"><h4>🦠 Herpes Simples Tipo I</h4><ul>
+      <li><strong>Gengivoestomatite herpética aguda:</strong> Aciclovir sistêmico 20 mg/kg, 4x/dia por 5 dias (nos 3 primeiros dias da doença)</li>
+      <li><strong>Herpes labial recorrente:</strong> Aciclovir creme 5% — 5x/dia até remissão</li>
+    </ul></div>
+    <div class="info-box"><h4>💊 Úlceras Aftosas / Traumáticas</h4><ul>
+      <li>Triancinolona 1 mg/g (Omcilon-A® orabase): fricção, 2–3x/dia</li>
+      <li>Hidrocortisona 5 mg/g (Gingilone®): fricção 3–6x/dia</li>
+      <li>Dexametasona elixir 0,5 mg/5 mL (Decadron®): bochechos 3x/dia para crianças &gt; 6 anos</li>
+    </ul></div>
+    <div class="info-box"><h4>⚠️ Cuidados com Corticosteroides</h4><p style="font-size:13.5px;"><strong>NÃO utilizar em ulcerações de etiologia viral</strong> (ex.: herpes simples). Diferenciar de úlceras aftosas antes de prescrever.</p></div>
+  </div>
+</div>
+
+<!-- CASOS CLÍNICOS -->
+<div id="section-casos" class="section">
+  <h1 class="section-title">📋 Casos Clínicos Simulados</h1>
+  <p class="section-subtitle">Casos clínicos completos com diagnóstico, planejamento, sequência clínica, conduta e prognóstico.</p>
+
+  <div class="case-study">
+    <div class="case-header"><div class="case-id">Caso 01 — Controle de Infecção</div><h3>Criança de 5 anos com dor espontânea, fístula e febre</h3></div>
+    <div class="case-body">
+      <div class="case-row"><span class="case-label">Diagnóstico</span><span class="case-value">Necrose pulpar com abscesso dentoalveolar agudo (Necro II) no dente 85 (segundo molar decíduo inferior direito). Cárie extensa com comprometimento de furca radiográfico.</span></div>
+      <div class="case-row"><span class="case-label">Queixa Principal</span><span class="case-value">Dor espontânea há 2 dias, febre (37,8°C), fístula vestibular, limitação de abertura bucal. Responsável relata mau hálito intenso.</span></div>
+      <div class="case-row"><span class="case-label">Exames</span><span class="case-value">Radiografia periapical: rarefação óssea periapical e interradicular, reabsorção radicular &lt; 1/3. Palpação positiva. Percussão positiva.</span></div>
+      <div class="case-row"><span class="case-label">Planejamento</span><span class="case-value">1. Analgesia preemptiva (Ibuprofeno 1h antes). 2. Anestesia local (lidocaína 2% c/ epinefrina). 3. Drenagem através do canal (necropulpectomia 1ª sessão). 4. Prescrição de amoxicilina. 5. Reavaliação em 15–30 dias. 6. 2ª sessão de necropulpectomia + obturação. 7. Coroa de aço convencional.</span></div>
+      <div class="case-row"><span class="case-label">Materiais</span><span class="case-value">Lidocaína 2% c/ epinefrina 1:100.000, agulha extracurta, limas Kerr 1ª série, NaOCl 1%, EDTA, pasta HC+ZnO+propilenoglicol, CIV, coroa de aço n° 68.</span></div>
+      <div class="case-row"><span class="case-label">Farmacologia</span><span class="case-value">Amoxicilina: 25 kg × (1 mL/kg/dia) = 25 mL/dia ÷ 3 = 8,3 mL a cada 8h por 7 dias. Ibuprofeno: 25 kg × 1 gota = 25 gotas de 6/6h por 3 dias.</span></div>
+      <div class="case-row"><span class="case-label">Sequência Clínica</span><span class="case-value">Sessão 1: Drenagem + instrumentação + curativo HC/SF + restauração provisória. Sessão 2 (15-30d): Obturação + CIV coronário. Sessão 3: Coroa de aço cimentada com CIV.</span></div>
+      <div class="case-row"><span class="case-label">Prognóstico</span><span class="case-value">Favorável com acompanhamento. Ausência de sinais de infecção e reabsorção patológica = sucesso. Acompanhar 3, 6 e 12 meses.</span></div>
+    </div>
+  </div>
+
+  <div class="case-study" style="margin-top:20px;">
+    <div class="case-header"><div class="case-id">Caso 02 — Abordagem Minimamente Invasiva</div><h3>Criança de 3 anos, comportamento não colaborador, múltiplas cavitações</h3></div>
+    <div class="case-body">
+      <div class="case-row"><span class="case-label">Diagnóstico</span><span class="case-value">Cárie de infância precoce (ECC). Múltiplas lesões cavitadas ativas em dentes decíduos anteriores e posteriores. Sem envolvimento pulpar. Frankl escore 1.</span></div>
+      <div class="case-row"><span class="case-label">Planejamento</span><span class="case-value">1. Adequação do meio bucal. 2. Aplicação de DFP em todas as lesões ativas (com consentimento). 3. Hall Technique para os molares. 4. CIV para incisivos comprometidos. 5. Reavaliação em 4 semanas. 6. Orientações de dieta e higiene intensivas.</span></div>
+      <div class="case-row"><span class="case-label">Sequência</span><span class="case-value">Sessão 1: Profilaxia + aplicação DFP + Hall technique bilateral. Sessão 2 (4 sem.): Avaliação das lesões paralisadas + restaurações definitivas possíveis. Sessões subsequentes: adaptação gradual para procedimentos convencionais.</span></div>
+      <div class="case-row"><span class="case-label">Manejo</span><span class="case-value">Tell-Show-Do; cadeira em posição levemente reclinada; pais na sala; sessões curtas (máx. 30–40 min); reforço positivo; programar consultas no horário de melhor cooperação.</span></div>
+      <div class="case-row"><span class="case-label">Prognóstico</span><span class="case-value">Dependente da cooperação familiar para mudança de dieta e higiene. DFP com efetividade comprovada por escurecimento das lesões. Evolução favorável com abordagem gradual.</span></div>
+    </div>
+  </div>
+
+  <div class="case-study" style="margin-top:20px;">
+    <div class="case-header"><div class="case-id">Caso 03 — Traumatismo</div><h3>Criança de 2 anos com intrusão de incisivo central superior decíduo</h3></div>
+    <div class="case-body">
+      <div class="case-row"><span class="case-label">Ocorrência</span><span class="case-value">Queda da própria altura em ambiente domiciliar há 1 hora. Criança chora. Incisivo central superior esquerdo não visível na cavidade oral.</span></div>
+      <div class="case-row"><span class="case-label">Diagnóstico</span><span class="case-value">Luxação intrusiva do dente 61. Radiografia lateral externa: ápice deslocado para vestibular (imagem encurtada → provável direção vestibular).</span></div>
+      <div class="case-row"><span class="case-label">Conduta</span><span class="case-value">Ápice para vestibular + menos de metade da coroa intruída → aguardar reerupção espontânea (máximo 6 meses). Sem contenção necessária.</span></div>
+      <div class="case-row"><span class="case-label">Instruções</span><span class="case-value">Clorexidina 0,12% local 2x/dia por 7 dias. Dieta pastosa por 7 dias. Evitar chupeta. Verificar vacina antitetânica. Retorno em 1 semana.</span></div>
+      <div class="case-row"><span class="case-label">Acompanhamento</span><span class="case-value">1 sem. → 4 sem. → 8 sem. → 6 meses → 12 meses → anualmente até erupção do permanente. Alertar pais sobre sequelas potenciais para o 21 permanente (hipoplasia, dilaceração).</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ANATOMIA -->
+<div id="section-anatomia" class="section">
+  <h1 class="section-title">📖 Anatomia, Dentição Decídua e Desenvolvimento</h1>
+  <p class="section-subtitle">Conhecimento essencial para compreender as diferenças entre dentes decíduos e permanentes e as peculiaridades do atendimento odontopediátrico.</p>
+
+  <h2 class="content-h2">Características dos Dentes Decíduos vs Permanentes</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Característica</th><th>Dente Decíduo</th><th>Dente Permanente</th></tr></thead>
+    <tbody>
+      <tr><td>Tamanho</td><td>Menor</td><td>Maior</td></tr>
+      <tr><td>Cor</td><td>Mais branca/opaca</td><td>Mais amarelada/translúcida</td></tr>
+      <tr><td>Esmalte</td><td>Mais delgado (1–2 mm)</td><td>Mais espesso</td></tr>
+      <tr><td>Câmara pulpar</td><td>Proporcionalmente maior</td><td>Proporcionalmente menor</td></tr>
+      <tr><td>Cornos pulpares</td><td>Muito proeminentes</td><td>Menos proeminentes</td></tr>
+      <tr><td>Raízes</td><td>Longas, delgadas, divergentes (molares)</td><td>Mais robustas e convergentes</td></tr>
+      <tr><td>Reabsorção</td><td>Fisiológica pelo sucessor</td><td>Patológica se ocorrer</td></tr>
+      <tr><td>Osso circundante</td><td>Mais poroso, medular mais ampla</td><td>Mais compacto</td></tr>
+      <tr><td>Anestesia</td><td>Infiltrativa eficaz na mandíbula ant.</td><td>Bloqueio necessário na mandíbula post.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="content-h2">Cronologia de Erupção — Dentes Decíduos</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Dente</th><th>Erupção (meses)</th></tr></thead>
+    <tbody>
+      <tr><td>Incisivo central inferior</td><td>6–10</td></tr>
+      <tr><td>Incisivo central superior</td><td>8–12</td></tr>
+      <tr><td>Incisivo lateral superior</td><td>9–13</td></tr>
+      <tr><td>Incisivo lateral inferior</td><td>10–16</td></tr>
+      <tr><td>Primeiro molar superior</td><td>13–19</td></tr>
+      <tr><td>Primeiro molar inferior</td><td>14–18</td></tr>
+      <tr><td>Canino superior</td><td>16–22</td></tr>
+      <tr><td>Canino inferior</td><td>17–23</td></tr>
+      <tr><td>Segundo molar inferior</td><td>23–31</td></tr>
+      <tr><td>Segundo molar superior</td><td>25–33</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="anatomy-box">
+    <h4>🦷 Particularidades Anatômicas Clinicamente Relevantes</h4>
+    <ul>
+      <li><strong>Polpa volumosa:</strong> câmara pulpar e canais radiculares proporcionalmente maiores → risco aumentado de exposição pulpar durante o preparo</li>
+      <li><strong>Cornos mesiovestibulares proeminentes:</strong> em molares, podem ser atingidos mesmo em lesões moderadas de cárie</li>
+      <li><strong>Raízes divergentes dos molares:</strong> envolvem o germe do dente permanente → cuidado em extrações e exames radiográficos</li>
+      <li><strong>Reabsorção radicular fisiológica:</strong> afeta a indicação e o prognóstico de tratamentos pulpares (contraindica pulpectomia se &gt; 1/3 reabsorvido)</li>
+      <li><strong>Osso mais poroso:</strong> anestesia infiltrativa é eficaz em toda a mandíbula nos dentes decíduos</li>
+      <li><strong>Furca no terço cervical:</strong> câmara pulpar próxima ao assoalho → perfuração de furca é complicação real</li>
+    </ul>
+  </div>
+
+  <div class="credit-bar" style="margin-top:40px;border-radius:10px;">
+    Manual desenvolvido por <strong>Bruno Assunção Ribeiro</strong> · Conteúdo baseado em: Costa LRRS (Org.). Passo a Passo em Odontopediatria Clínica. Fac. Odontologia UFG, 2019. · AAPD Guidelines 2017/2018
+  </div>
+</div>
+
+<!-- TÉCNICAS DE RESTAURAÇÃO DIRETA -->
+<div id="section-restauracao-direta" class="section">
+  <h1 class="section-title">🦷 Técnicas de Restauração Direta em Odontopediatria</h1>
+  <p class="section-subtitle">Técnicas modernas de restauração direta com resina composta que priorizam preservação de estrutura dental, estética e longevidade em crianças.</p>
+
+  <div class="alert alert-success">
+    <div class="alert-icon">✅</div>
+    <div class="alert-content">
+      <h4>Princípio Atual</h4>
+      <p>A restauração direta com resina composta é a primeira escolha para a maioria das lesões em dentes decíduos e permanentes jovens quando há boa cooperação e controle de umidade adequado.</p>
+    </div>
+  </div>
+
+  <h2 class="content-h2">1. Técnica Incremental Convencional (Camadas Oblíquas)</h2>
+  <div class="steps-container">
+    <div class="steps-header"><h3>Passo a Passo</h3></div>
+    <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Preparar a cavidade</h4><p>Remover cárie seletivamente. Aplicar sistema adesivo (geralmente etch-and-rinse ou universal).</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Primeira camada</h4><p>Aplicar uma camada fina de resina flowable no fundo da cavidade (0,5–1 mm) para melhor adaptação.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Camadas oblíquas</h4><p>Inserir resina em incrementos de no máximo 2 mm em ângulo oblíquo (45°), sempre começando pelas paredes. Cada camada fotopolimerizada individualmente.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Finalizar</h4><p>Construir a anatomia oclusal. Remover excessos com bisturi e Hollenback. Polimento em sessão posterior.</p></div></div>
+  </div>
+
+  <h2 class="content-h2">2. Técnica Bulk-Fill (Alta Profundidade)</h2>
+  <p class="body-text">Indicada para restaurações posteriores quando o controle de umidade é bom. Permite inserir até 4-5 mm de resina em uma única camada.</p>
+  <div class="info-grid">
+    <div class="info-box">
+      <h4>Vantagens</h4>
+      <ul>
+        <li>Menor tempo clínico</li>
+        <li>Menor estresse de contração</li>
+        <li>Menos camadas = menos bolhas</li>
+        <li>Boa para crianças com menor cooperação</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <h4>Cuidados</h4>
+      <ul>
+        <li>Usar apenas em cavidades com boa acesso à luz</li>
+        <li>Verificar a profundidade máxima do fabricante</li>
+        <li>Sempre cobrir com camada de resina convencional na superfície oclusal para melhor polimento</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="content-h2">3. Stamp Technique (Técnica do Selo)</h2>
+  <p class="body-text">Técnica excelente para restaurar anatomia oclusal de forma rápida e precisa, especialmente útil em odontopediatria.</p>
+  <div class="steps-container">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Antes da anestesia</h4><p>Com o dente limpo e seco, aplicar uma pequena quantidade de resina flowable ou putty na superfície oclusal e fotopolimerizar para criar um "selo" da anatomia original.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Preparar a cavidade</h4><p>Remover a cárie normalmente.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Restaurar</h4><p>Após inserir a resina bulk ou incremental, posicionar o selo sobre a resina ainda não polimerizada e pressionar levemente.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Polimerizar através do selo</h4><p>Fotopolimerizar. Remover o selo. Acabamento mínimo necessário.</p></div></div>
+  </div>
+
+  <h2 class="content-h2">4. Injection Molding Technique</h2>
+  <p class="body-text">Técnica moderna que utiliza matrizes transparentes e seringa de resina para injetar o material diretamente na cavidade, ideal para dentes posteriores com preparos complexos.</p>
+  <div class="tip-box">
+    <strong>Vantagem principal:</strong> Excelente adaptação marginal e reconstrução anatômica com menor sensibilidade à técnica do operador.
+  </div>
+
+  <h2 class="content-h2">Dicas Importantes para Restauração Direta em Crianças</h2>
+  <div class="quick-ref">
+    <div class="qr-item"><div class="label">Controle de umidade</div><div class="value">Prioridade #1</div></div>
+    <div class="qr-item"><div class="label">Incrementos</div><div class="value">Máx. 2 mm</div></div>
+    <div class="qr-item"><div class="label">Polimento</div><div class="value">Outra sessão</div></div>
+    <div class="qr-item"><div class="label">Matriz + Cunha</div><div class="value">Sempre em proximais</div></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+
+  document.querySelectorAll('#sidebar nav a').forEach(a => a.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  const titles = {
+    home: 'Manual Clínico de Odontopediatria',
+    anestesia: 'Anestesia Local em Odontopediatria',
+    isolamento: 'Isolamento do Campo Operatório',
+    carie: 'Terapêutica da Cárie Dentária',
+    restauracoes: 'Restaurações em Odontopediatria',
+    'restauracao-direta': 'Técnicas de Restauração Direta',
+    'terapia-pulpar': 'Terapia Pulpar em Dentes Decíduos',
+    cirurgia: 'Cirurgia Bucal em Odontopediatria',
+    traumatismo: 'Traumatismo na Dentição Decídua',
+    manejo: 'Manejo Comportamental',
+    farmaco: 'Farmacologia Odontopediátrica',
+    casos: 'Casos Clínicos Simulados',
+    anatomia: 'Anatomia & Desenvolvimento'
+  };
+  document.getElementById('header-title').textContent = titles[id] || 'Manual Clínico';
+
+  closeSidebar();
+  window.scrollTo(0, 0);
+}
+
+function showTab(tabGroupId, tabId, btn) {
+  const group = document.getElementById(tabGroupId);
+  group.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+
+  btn.closest('.tab-nav').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('show');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+}
+
+function calcularDose() {
+  const peso = parseFloat(document.getElementById('peso-input').value);
+  const [doseMgKg, conc, doseMax] = document.getElementById('anest-select').value.split(',').map(Number);
+
+  if (!peso || peso <= 0) {
+    alert('Por favor, insira o peso da criança.');
+    return;
+  }
+
+  const dosePaciente = peso * doseMgKg;
+  const doseEfetiva = Math.min(dosePaciente, doseMax);
+  const concTubete = conc * 18; // conc% * 1.8mL = conc/100 * 1000 * 1.8 = conc*18
+  const tubetes = doseEfetiva / concTubete;
+
+  document.getElementById('r-dose').textContent = dosePaciente.toFixed(1) + ' mg (limitado a ' + doseEfetiva.toFixed(1) + ' mg)';
+  document.getElementById('r-conc').textContent = concTubete.toFixed(0) + ' mg';
+  document.getElementById('r-tubetes').textContent = tubetes.toFixed(1) + ' tubetes (usar ' + Math.floor(tubetes) + ')';
+
+  const warning = document.getElementById('r-warning');
+  if (dosePaciente > doseMax) {
+    warning.style.display = 'block';
+    warning.textContent = '⚠️ A dose calculada pelo peso (' + dosePaciente.toFixed(0) + ' mg) excede o limite máximo total (' + doseMax + ' mg). Utilizar o limite total.';
+  } else {
+    warning.style.display = 'none';
+  }
+
+  document.getElementById('calc-result').classList.add('show');
+}
+</script>
+</body>
+</html>
+HTMLEOF
